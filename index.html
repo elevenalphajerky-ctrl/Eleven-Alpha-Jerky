@@ -4,9 +4,395 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eleven Alpha Jerky</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&family=Inter:wght@300;400;700;900&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+background:#050505;
+color:white;
+font-family:'Inter',sans-serif;
+}
+
+header{
+position:fixed;
+top:0;
+width:100%;
+background:rgba(0,0,0,.9);
+padding:20px 40px;
+z-index:1000;
+border-bottom:1px solid rgba(212,162,76,.25);
+}
+
+nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+max-width:1400px;
+margin:auto;
+}
+
+.brand{
+font-family:'Oswald',sans-serif;
+font-size:28px;
+letter-spacing:2px;
+font-weight:700;
+}
+
+.nav-links{
+display:flex;
+gap:30px;
+}
+
+.nav-links a{
+color:white;
+text-decoration:none;
+font-size:14px;
+font-weight:700;
+letter-spacing:2px;
+}
+
+.contact-btn{
+background:#d4a24c;
+padding:12px 20px;
+color:black!important;
+}
+
+.hero{
+height:100vh;
+position:relative;
+display:flex;
+justify-content:center;
+align-items:center;
+text-align:center;
+overflow:hidden;
+}
+
+.hero img.bg{
+position:absolute;
+width:100%;
+height:100%;
+object-fit:cover;
+filter:brightness(.4);
+}
+
+.overlay{
+position:absolute;
+inset:0;
+background:rgba(0,0,0,.35);
+}
+
+.hero-content{
+position:relative;
+z-index:2;
+max-width:1000px;
+padding:20px;
+}
+
+.logo{
+width:450px;
+max-width:90%;
+margin-bottom:20px;
+}
+
+.subtitle{
+letter-spacing:5px;
+color:#d4a24c;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.hero h1{
+font-size:110px;
+line-height:.9;
+font-weight:900;
+margin-bottom:20px;
+}
+
+.hero p{
+font-size:18px;
+color:#ddd;
+max-width:700px;
+margin:auto;
+line-height:1.7;
+}
+
+.buttons{
+margin-top:35px;
+display:flex;
+justify-content:center;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.btn{
+padding:15px 28px;
+text-decoration:none;
+font-weight:700;
+letter-spacing:1px;
+}
+
+.primary{
+background:#d4a24c;
+color:black;
+}
+
+.secondary{
+border:1px solid #666;
+color:white;
+}
+
+.story{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+padding:100px 50px;
+max-width:1400px;
+margin:auto;
+align-items:center;
+}
+
+.story h2{
+font-size:70px;
+line-height:1;
+margin-bottom:25px;
+font-weight:900;
+}
+
+.story p{
+line-height:1.9;
+margin-bottom:20px;
+color:#d1d1d1;
+}
+
+.story img{
+width:100%;
+border:2px solid rgba(212,162,76,.25);
+}
+
+.section-label{
+color:#d4a24c;
+letter-spacing:4px;
+font-weight:700;
+margin-bottom:15px;
+}
+
+.flavors{
+padding:40px 40px 100px;
+max-width:1450px;
+margin:auto;
+}
+
+.cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+}
+
+.card{
+background:#101010;
+border:1px solid rgba(212,162,76,.2);
+padding:30px;
+}
+
+.card h3{
+font-size:34px;
+font-family:'Oswald',sans-serif;
+line-height:1;
+margin-bottom:15px;
+}
+
+.card p{
+line-height:1.8;
+color:#d0d0d0;
+margin-bottom:20px;
+}
+
+.flames{
+font-size:26px;
+letter-spacing:3px;
+}
+
+footer{
+padding:80px 20px;
+text-align:center;
+border-top:1px solid rgba(212,162,76,.2);
+}
+
+footer h2{
+font-size:50px;
+margin-bottom:20px;
+}
+
+footer a{
+color:#d4a24c;
+text-decoration:none;
+font-weight:700;
+}
+
+@media(max-width:1000px){
+.story{
+grid-template-columns:1fr;
+}
+.cards{
+grid-template-columns:1fr 1fr;
+}
+.hero h1{
+font-size:72px;
+}
+}
+
+@media(max-width:700px){
+.cards{
+grid-template-columns:1fr;
+}
+.story{
+padding:80px 25px;
+}
+.story h2{
+font-size:44px;
+}
+.hero h1{
+font-size:58px;
+}
+.nav-links{
+display:none;
+}
+}
+</style>
 </head>
-<body style="background:#000;color:#fff;font-family:Arial;padding:40px;">
-<h1>Eleven Alpha Jerky</h1>
-<p>Updated website file package.</p>
+
+<body>
+
+<header>
+<nav>
+<div class="brand">ELEVEN ALPHA JERKY</div>
+
+<div class="nav-links">
+<a href="#story">OUR STORY</a>
+<a href="#flavors">FLAVORS</a>
+<a href="#contact" class="contact-btn">CONTACT</a>
+</div>
+</nav>
+</header>
+
+<section class="hero">
+
+<img class="bg" src="https://images.unsplash.com/photo-1518492104633-130d0cc84637?q=80&w=2070&auto=format&fit=crop">
+
+<div class="overlay"></div>
+
+<div class="hero-content">
+
+<img class="logo" src="https://raw.githubusercontent.com/elevenalphajerky-ctrl/Eleven-Alpha-Jerky/main/logo.png">
+
+<div class="subtitle">
+BOLD FLAVORS. QUALITY JERKY.
+</div>
+
+<h1>MADE WITH PURPOSE.</h1>
+
+<p>
+Veteran-owned small batch jerky built through family, tradition, and years of refinement.
+</p>
+
+<div class="buttons">
+<a href="#flavors" class="btn primary">VIEW FLAVORS</a>
+<a href="mailto:elevenalphajerky@gmail.com" class="btn secondary">EMAIL TO ORDER</a>
+</div>
+
+</div>
+</section>
+
+<section class="story" id="story">
+
+<div>
+
+<div class="section-label">OUR STORY</div>
+
+<h2>
+BUILT THROUGH FAMILY, TRADITION, AND YEARS OF REFINEMENT.
+</h2>
+
+<p>
+Eleven Alpha Jerky wasn’t built overnight. What started over 15 years ago making venison jerky for family and friends slowly evolved into a passion for perfecting bold flavor, consistent quality, and handcrafted production.
+</p>
+
+<p>
+Over the years, recipes were tested, adjusted, and refined through countless batches — balancing smoke, seasoning, heat, texture, and tenderness until each flavor developed its own identity.
+</p>
+
+<p>
+At the center of Eleven Alpha Jerky is family. The goal was never just to make jerky — it was to build something meaningful that reflected discipline, consistency, hard work, and pride in the finished product.
+</p>
+
+<p>
+My wife and kids became the toughest taste-test team imaginable. Every batch, flavor adjustment, and new idea was tested around the family table. Their feedback helped shape the flavors into what they are today.
+</p>
+
+<p>
+Thank you for supporting a veteran-owned small business and becoming part of the journey.
+</p>
+
+</div>
+
+<div>
+<img src="https://images.unsplash.com/photo-1529692236671-f1dc1f8e1c0f?q=80&w=2070&auto=format&fit=crop">
+</div>
+
+</section>
+
+<section class="flavors" id="flavors">
+
+<div class="section-label">OUR FLAVORS</div>
+
+<div class="cards">
+
+<div class="card">
+<h3>Lucy’s Cajun Campfire</h3>
+<p>
+A bold Cajun mesquite blend with smoky heat and deep campfire flavor.
+</p>
+<div class="flames">🔥🔥🔥🔥⚪</div>
+</div>
+
+<div class="card">
+<h3>Cajun Hick</h3>
+<p>
+A rich hickory Cajun blend combining smooth smoke with bold Southern heat.
+</p>
+<div class="flames">🔥🔥🔥🔥⚪</div>
+</div>
+
+<div class="card">
+<h3>Rub the Applewood</h3>
+<p>
+A bold applewood blend with smooth smoke and savory depth.
+</p>
+<div class="flames">🔥⚪⚪⚪⚪</div>
+</div>
+
+<div class="card">
+<h3>Slap the Smoke</h3>
+<p>
+A classic BBQ flavor blend packed with rich smoke and backyard-style flavor.
+</p>
+<div class="flames">🔥⚪⚪⚪⚪</div>
+</div>
+
+</div>
+</section>
+
+<footer id="contact">
+<h2>Ready To Order?</h2>
+<p>Email us directly to place an order.</p>
+
+<a href="mailto:elevenalphajerky@gmail.com">
+elevenalphajerky@gmail.com
+</a>
+</footer>
+
 </body>
 </html>
