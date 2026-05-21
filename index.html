@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,373 +7,347 @@
 <title>Eleven Alpha Jerky</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+
+* {
+margin:0;
+padding:0;
+box-sizing:border-box;
 }
 
-html{
-    scroll-behavior:smooth;
+html {
+scroll-behavior:smooth;
 }
 
-body{
-    background:#050505;
-    color:white;
-    font-family:Arial, Helvetica, sans-serif;
-    overflow-x:hidden;
+body {
+background:#050505;
+font-family:Arial, Helvetica, sans-serif;
+color:white;
+overflow-x:hidden;
 }
 
-header{
-    position:sticky;
-    top:0;
-    z-index:999;
-    background:#000;
-    border-bottom:1px solid rgba(181,133,60,.4);
+header {
+position:sticky;
+top:0;
+z-index:999;
+background:#000;
+border-bottom:1px solid rgba(181,133,60,.4);
 }
 
-.nav{
-    max-width:1400px;
-    margin:auto;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:22px 40px;
+.nav {
+max-width:1400px;
+margin:auto;
+padding:22px 40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-.logo-text{
-    font-size:18px;
-    font-weight:900;
-    letter-spacing:3px;
-    text-transform:uppercase;
+.brand {
+font-size:18px;
+font-weight:900;
+letter-spacing:3px;
+text-transform:uppercase;
 }
 
-.nav-links{
-    display:flex;
-    gap:30px;
-    align-items:center;
+.nav-links {
+display:flex;
+gap:28px;
+align-items:center;
 }
 
-.nav-links a{
-    color:white;
-    text-decoration:none;
-    font-size:13px;
-    font-weight:800;
-    letter-spacing:2px;
-    text-transform:uppercase;
+.nav-links a {
+text-decoration:none;
+color:white;
+font-size:13px;
+font-weight:800;
+letter-spacing:2px;
+text-transform:uppercase;
 }
 
-.contact-btn{
-    background:#b5853c;
-    color:black!important;
-    padding:14px 22px;
+.contact-btn {
+background:#b5853c;
+padding:14px 20px;
+color:black!important;
 }
 
-.hero{
-    position:relative;
-    min-height:700px;
-    background:
-    linear-gradient(rgba(0,0,0,.55), rgba(0,0,0,.7)),
-    url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop');
-    background-size:cover;
-    background-position:center;
-    display:flex;
-    align-items:center;
+.hero {
+min-height:720px;
+display:flex;
+align-items:center;
+background:
+linear-gradient(rgba(0,0,0,.65), rgba(0,0,0,.7)),
+url('https://images.unsplash.com/photo-1518492104633-130d0cc84637?q=80&w=1600&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
 }
 
-.hero-content{
-    max-width:1400px;
-    margin:auto;
-    width:100%;
-    padding:60px 50px;
+.hero-content {
+max-width:1400px;
+margin:auto;
+width:100%;
+padding:60px 50px;
 }
 
-.hero-logo{
-    width:420px;
-    max-width:90%;
-    margin-bottom:30px;
-    display:block;
+.hero-logo {
+width:430px;
+max-width:90%;
+margin-bottom:28px;
+display:block;
 }
 
-.kicker{
-    color:#d8d8d8;
-    font-size:22px;
-    font-weight:900;
-    letter-spacing:5px;
-    text-transform:uppercase;
-    margin-bottom:10px;
+.kicker {
+font-size:22px;
+font-weight:900;
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:10px;
 }
 
-.hero h1{
-    font-size:110px;
-    line-height:.9;
-    font-weight:1000;
-    text-transform:uppercase;
-    max-width:700px;
-    margin-bottom:24px;
+.hero h1 {
+font-size:110px;
+line-height:.9;
+font-weight:1000;
+text-transform:uppercase;
+max-width:700px;
+margin-bottom:20px;
 }
 
-.hero p{
-    max-width:650px;
-    color:#e0e0e0;
-    font-size:20px;
-    line-height:1.6;
+.hero p {
+max-width:650px;
+line-height:1.7;
+font-size:20px;
+color:#e0e0e0;
 }
 
-.hero-buttons{
-    display:flex;
-    gap:16px;
-    margin-top:35px;
-    flex-wrap:wrap;
+.buttons {
+display:flex;
+gap:16px;
+margin-top:35px;
+flex-wrap:wrap;
 }
 
-.btn{
-    padding:16px 28px;
-    text-decoration:none;
-    font-weight:900;
-    letter-spacing:1px;
-    text-transform:uppercase;
-    border:1px solid #b5853c;
+.btn {
+padding:16px 28px;
+text-decoration:none;
+font-weight:900;
+letter-spacing:1px;
+text-transform:uppercase;
+border:1px solid #b5853c;
 }
 
-.btn-primary{
-    background:#b5853c;
-    color:black;
+.primary {
+background:#b5853c;
+color:black;
 }
 
-.btn-secondary{
-    color:white;
+.secondary {
+color:white;
 }
 
-.story{
-    max-width:1400px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:50px;
-    padding:80px 50px;
-    align-items:center;
+.story {
+max-width:1400px;
+margin:auto;
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:50px;
+padding:80px 50px;
+align-items:center;
 }
 
-.section-label{
-    color:#b5853c;
-    font-size:13px;
-    font-weight:900;
-    letter-spacing:4px;
-    text-transform:uppercase;
-    margin-bottom:18px;
+.label {
+color:#b5853c;
+font-size:13px;
+font-weight:900;
+letter-spacing:4px;
+text-transform:uppercase;
+margin-bottom:18px;
 }
 
-.story h2{
-    font-size:72px;
-    line-height:.95;
-    text-transform:uppercase;
-    margin-bottom:25px;
+.story h2 {
+font-size:72px;
+line-height:.95;
+margin-bottom:24px;
+text-transform:uppercase;
 }
 
-.story p{
-    color:#d9d9d9;
-    line-height:1.8;
-    margin-bottom:18px;
-    font-size:16px;
+.story p {
+line-height:1.8;
+margin-bottom:18px;
+color:#dadada;
 }
 
-.story-image{
-    border:1px solid rgba(181,133,60,.5);
-    overflow:hidden;
+.story-image {
+background:
+linear-gradient(rgba(0,0,0,.2), rgba(0,0,0,.2)),
+url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop');
+background-size:cover;
+background-position:center;
+min-height:640px;
+border:1px solid rgba(181,133,60,.5);
 }
 
-.story-image img{
-    width:100%;
-    display:block;
+.flavors {
+max-width:1400px;
+margin:auto;
+padding:10px 50px 80px;
 }
 
-.flavors{
-    max-width:1400px;
-    margin:auto;
-    padding:20px 50px 80px;
+.flavor-grid {
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:24px;
+margin-top:30px;
 }
 
-.flavor-grid{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:24px;
-    margin-top:30px;
+.card {
+background:#0a0a0a;
+border:1px solid rgba(181,133,60,.5);
+padding:30px 24px;
+text-align:center;
 }
 
-.card{
-    position:relative;
-    min-height:420px;
-    overflow:hidden;
-    border:1px solid rgba(181,133,60,.5);
+.card h3 {
+font-size:34px;
+line-height:1;
+text-transform:uppercase;
+margin-bottom:16px;
 }
 
-.card img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    position:absolute;
-    inset:0;
+.card p {
+line-height:1.7;
+color:#d9d9d9;
+min-height:80px;
 }
 
-.overlay{
-    position:absolute;
-    inset:0;
-    background:linear-gradient(to top, rgba(0,0,0,.9), rgba(0,0,0,.2));
+.flames {
+margin-top:14px;
+font-size:24px;
 }
 
-.card-content{
-    position:absolute;
-    bottom:24px;
-    left:24px;
-    right:24px;
-    z-index:2;
-    text-align:center;
+.bottom {
+border-top:1px solid rgba(181,133,60,.4);
+border-bottom:1px solid rgba(181,133,60,.4);
+padding:36px 20px;
+margin-top:20px;
 }
 
-.card h3{
-    font-size:38px;
-    line-height:1;
-    text-transform:uppercase;
-    margin-bottom:12px;
+.bottom-grid {
+max-width:1200px;
+margin:auto;
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+text-align:center;
 }
 
-.card p{
-    line-height:1.6;
-    color:#efefef;
-    min-height:75px;
+.bottom-item {
+font-weight:900;
+letter-spacing:2px;
+text-transform:uppercase;
+color:#d4d4d4;
 }
 
-.flames{
-    font-size:24px;
-    margin-top:14px;
-    letter-spacing:2px;
+.contact {
+text-align:center;
+padding:80px 24px;
 }
 
-.bottom-strip{
-    border-top:1px solid rgba(181,133,60,.4);
-    border-bottom:1px solid rgba(181,133,60,.4);
-    padding:35px 20px;
+.contact h2 {
+font-size:60px;
+margin-bottom:18px;
+text-transform:uppercase;
 }
 
-.strip-grid{
-    max-width:1200px;
-    margin:auto;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    text-align:center;
+.email {
+margin-top:24px;
+font-size:24px;
+font-weight:900;
+color:#b5853c;
 }
 
-.strip-item{
-    color:#cfcfcf;
-    font-weight:800;
-    letter-spacing:2px;
-    text-transform:uppercase;
+footer {
+border-top:1px solid rgba(181,133,60,.3);
+padding:28px;
+text-align:center;
+color:#888;
 }
 
-.contact{
-    text-align:center;
-    padding:80px 30px;
+@media(max-width:1000px) {
+
+.story {
+grid-template-columns:1fr;
 }
 
-.contact h2{
-    font-size:60px;
-    text-transform:uppercase;
-    margin-bottom:20px;
+.flavor-grid {
+grid-template-columns:1fr 1fr;
 }
 
-.contact p{
-    color:#d8d8d8;
-    margin-bottom:30px;
+.hero h1 {
+font-size:72px;
 }
 
-.email{
-    color:#b5853c;
-    font-size:24px;
-    font-weight:900;
+.story h2 {
+font-size:54px;
 }
 
-footer{
-    padding:30px;
-    text-align:center;
-    color:#888;
-    border-top:1px solid rgba(181,133,60,.3);
 }
 
-@media(max-width:1000px){
+@media(max-width:700px) {
 
-.story{
-    grid-template-columns:1fr;
-}
-
-.flavor-grid{
-    grid-template-columns:1fr 1fr;
+.nav {
+padding:18px 20px;
 }
 
-.hero h1{
-    font-size:80px;
+.nav-links {
+gap:14px;
 }
 
-.story h2{
-    font-size:56px;
-}
-}
-
-@media(max-width:700px){
-
-.nav{
-    padding:18px 20px;
+.nav-links a {
+font-size:11px;
 }
 
-.nav-links{
-    gap:14px;
+.hero {
+min-height:620px;
 }
 
-.nav-links a{
-    font-size:11px;
+.hero-content {
+padding:50px 24px;
 }
 
-.hero{
-    min-height:620px;
+.hero h1 {
+font-size:56px;
 }
 
-.hero-content{
-    padding:40px 24px;
+.kicker {
+font-size:16px;
 }
 
-.hero h1{
-    font-size:58px;
+.story {
+padding:60px 24px;
 }
 
-.kicker{
-    font-size:16px;
+.story h2 {
+font-size:42px;
 }
 
-.story{
-    padding:60px 24px;
+.flavors {
+padding:20px 24px 70px;
 }
 
-.story h2{
-    font-size:44px;
+.flavor-grid {
+grid-template-columns:1fr;
 }
 
-.flavors{
-    padding:20px 24px 70px;
+.bottom-grid {
+grid-template-columns:1fr;
 }
 
-.flavor-grid{
-    grid-template-columns:1fr;
+.contact h2 {
+font-size:42px;
 }
 
-.strip-grid{
-    grid-template-columns:1fr;
 }
 
-.contact h2{
-    font-size:42px;
-}
-}
 </style>
 </head>
 
@@ -380,13 +355,13 @@ footer{
 
 <header>
 <div class="nav">
-<div class="logo-text">Eleven Alpha Jerky</div>
+<div class="brand">Eleven Alpha Jerky</div>
 
 <div class="nav-links">
 <a href="#home">Home</a>
 <a href="#story">Our Story</a>
 <a href="#flavors">Flavors</a>
-<a class="contact-btn" href="#contact">Contact</a>
+<a href="#contact" class="contact-btn">Contact</a>
 </div>
 </div>
 </header>
@@ -394,7 +369,7 @@ footer{
 <section class="hero" id="home">
 <div class="hero-content">
 
-<img class="hero-logo" src="https://i.imgur.com/J5YkX7v.png" alt="Eleven Alpha Jerky Logo">
+<img class="hero-logo" src="data:image/svg+xml;base64,CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iOTAwIiBoZWlnaHQ9IjQyMCIgdmlld0JveD0iMCAwIDkwMCA0MjAiPgo8cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJibGFjayIvPgo8dGV4dCB4PSI0NTAiIHk9IjE0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiCmZvbnQtc2l6ZT0iNzAiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC13ZWlnaHQ9IjkwMCI+RUxFVkVOIEFMUEhBPC90ZXh0Pgo8dGV4dCB4PSI0NTAiIHk9IjI1MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0id2hpdGUiCmZvbnQtc2l6ZT0iMTEwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtd2VpZ2h0PSI5MDAiPkpFUktZPC90ZXh0Pgo8dGV4dCB4PSI0NTAiIHk9IjM0MCIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZmlsbD0iI2I1ODUzYyIKZm9udC1zaXplPSIzNCIgZm9udC1mYW1pbHk9IkFyaWFsIiBmb250LXdlaWdodD0iNzAwIj5WRVRFUkFOIE9XTkVEIFNNQUxMIEJBVENIIEpFUktZPC90ZXh0Pgo8L3N2Zz4K">
 
 <div class="kicker">Bold Flavors. Quality Jerky.</div>
 
@@ -404,9 +379,9 @@ footer{
 Veteran-owned small batch jerky built through family, tradition, and years of refinement.
 </p>
 
-<div class="hero-buttons">
-<a class="btn btn-primary" href="#flavors">View Flavors</a>
-<a class="btn btn-secondary" href="mailto:elevenalphajerky@gmail.com">Order Now</a>
+<div class="buttons">
+<a class="btn primary" href="#flavors">View Flavors</a>
+<a class="btn secondary" href="mailto:elevenalphajerky@gmail.com">Order Now</a>
 </div>
 
 </div>
@@ -415,7 +390,8 @@ Veteran-owned small batch jerky built through family, tradition, and years of re
 <section class="story" id="story">
 
 <div>
-<div class="section-label">Our Story</div>
+
+<div class="label">Our Story</div>
 
 <h2>Built Through Family, Tradition, and Years of Refinement.</h2>
 
@@ -438,83 +414,64 @@ My wife and kids became the toughest taste-test team imaginable. Every batch, fl
 <p>
 Thank you for supporting a veteran-owned small business and becoming part of the journey.
 </p>
+
 </div>
 
-<div class="story-image">
-<img src="https://images.unsplash.com/photo-1529692236671-f1de0fbe3f06?q=80&w=1200&auto=format&fit=crop" alt="">
-</div>
+<div class="story-image"></div>
 
 </section>
 
 <section class="flavors" id="flavors">
 
-<div class="section-label">Our Flavors</div>
+<div class="label">Our Flavors</div>
 
 <div class="flavor-grid">
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=1200&auto=format&fit=crop">
-<div class="overlay"></div>
-<div class="card-content">
 <h3>Lucy’s Cajun Campfire</h3>
 <p>A bold Cajun mesquite blend with smoky heat and deep campfire flavor.</p>
 <div class="flames">🔥🔥🔥🔥○</div>
 </div>
-</div>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=1200&auto=format&fit=crop">
-<div class="overlay"></div>
-<div class="card-content">
 <h3>Cajun Hick</h3>
 <p>A rich hickory Cajun blend combining smooth smoke with bold Southern heat.</p>
 <div class="flames">🔥🔥🔥🔥○</div>
 </div>
-</div>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1529692236671-f1de0fbe3f06?q=80&w=1200&auto=format&fit=crop">
-<div class="overlay"></div>
-<div class="card-content">
 <h3>Rub The Applewood</h3>
 <p>A bold applewood blend with smooth smoke and savory depth.</p>
 <div class="flames">🔥○○○○</div>
 </div>
-</div>
 
 <div class="card">
-<img src="https://images.unsplash.com/photo-1558030006-450675393462?q=80&w=1200&auto=format&fit=crop">
-<div class="overlay"></div>
-<div class="card-content">
 <h3>Slap The Smoke</h3>
 <p>A classic BBQ flavor blend packed with rich smoke and backyard-style flavor.</p>
 <div class="flames">🔥○○○○</div>
 </div>
-</div>
 
 </div>
 </section>
 
-<section class="bottom-strip">
-<div class="strip-grid">
-<div class="strip-item">Veteran Owned & Operated</div>
-<div class="strip-item">Made In Small Batches</div>
-<div class="strip-item">Quality Ingredients • No Shortcuts</div>
+<section class="bottom">
+<div class="bottom-grid">
+<div class="bottom-item">Veteran Owned & Operated</div>
+<div class="bottom-item">Made In Small Batches</div>
+<div class="bottom-item">Quality Ingredients • No Shortcuts</div>
 </div>
 </section>
 
 <section class="contact" id="contact">
-<div class="section-label">Contact</div>
+
+<div class="label">Contact</div>
 
 <h2>Ready To Order?</h2>
 
-<p>
-Email Eleven Alpha Jerky to place an order or check current availability.
-</p>
+<p>Email Eleven Alpha Jerky to place an order or check availability.</p>
 
-<div class="email">
-elevenalphajerky@gmail.com
-</div>
+<div class="email">elevenalphajerky@gmail.com</div>
+
 </section>
 
 <footer>
