@@ -1,397 +1,121 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Eleven Alpha Jerky</title>
-
 <style>
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;background:#050505}
-body{
-margin:0;
-background:#050505;
-color:#fff;
-font-family:Arial,Helvetica,sans-serif;
-}
-
-.hero{
-position:relative;
-min-height:100vh;
-background:
-linear-gradient(rgba(0,0,0,.45),rgba(0,0,0,.72)),
-url('https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;
-display:flex;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:120px 24px;
-}
-
-.nav{
-position:absolute;
-top:0;
-left:0;
-right:0;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:24px 40px;
-background:rgba(0,0,0,.55);
-border-bottom:1px solid rgba(181,133,60,.35);
-}
-
-.logo{
-font-size:34px;
-font-weight:1000;
-letter-spacing:.06em;
-text-transform:uppercase;
-}
-
-.logo span{
-color:#b5853c;
-}
-
-.nav-links{
-display:flex;
-gap:30px;
-}
-
-.nav-links a{
-color:#fff;
-text-decoration:none;
-font-weight:700;
-font-size:14px;
-letter-spacing:.08em;
-text-transform:uppercase;
-}
-
-.hero-content{
-max-width:900px;
-}
-
-.kicker{
-color:#d0a45a;
-font-size:15px;
-font-weight:900;
-letter-spacing:.28em;
-text-transform:uppercase;
-margin-bottom:18px;
-}
-
-h1{
-font-size:clamp(62px,10vw,130px);
-line-height:.9;
-margin:0 0 22px;
-font-weight:1000;
-text-transform:uppercase;
-}
-
-.hero p{
-max-width:760px;
-margin:0 auto 34px;
-font-size:20px;
-line-height:1.7;
-color:#ececec;
-}
-
-.buttons{
-display:flex;
-justify-content:center;
-gap:18px;
-flex-wrap:wrap;
-}
-
-.btn{
-padding:16px 28px;
-font-weight:1000;
-text-transform:uppercase;
-letter-spacing:.08em;
-text-decoration:none;
-border:2px solid #b5853c;
-transition:.2s ease;
-}
-
-.btn-primary{
-background:#b5853c;
-color:#050505;
-}
-
-.btn-secondary{
-color:#fff;
-}
-
-.btn:hover{
-transform:translateY(-2px);
-}
-
-.section{
-padding:90px 28px;
-background:#050505;
-}
-
-.story-grid{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:50px;
-max-width:1300px;
-margin:0 auto;
-align-items:center;
-}
-
-.story-image{
-width:100%;
-border:2px solid rgba(181,133,60,.4);
-}
-
-.story-kicker,
-.flavor-kicker{
-color:#b5853c;
-font-size:14px;
-font-weight:900;
-letter-spacing:.25em;
-text-transform:uppercase;
-margin-bottom:16px;
-}
-
-.story-title{
-font-size:clamp(44px,6vw,86px);
-font-weight:1000;
-line-height:.95;
-margin:0 0 28px;
-text-transform:uppercase;
-}
-
-.story-text p{
-color:#dddddd;
-font-size:18px;
-line-height:1.8;
-margin-bottom:22px;
-}
-
-.flavors{
-max-width:1300px;
-margin:0 auto;
-}
-
-.flavor-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:24px;
-margin-top:34px;
-}
-
-.flavor-card{
-background:#0c0c0c;
-border:1px solid rgba(181,133,60,.3);
-padding:30px;
-}
-
-.flavor-card h3{
-font-size:32px;
-line-height:1;
-margin:0 0 16px;
-text-transform:uppercase;
-}
-
-.flavor-card p{
-color:#d7d7d7;
-line-height:1.7;
-min-height:90px;
-}
-
-.flames{
-margin-top:22px;
-font-size:24px;
-letter-spacing:6px;
-color:#ff5a1f;
-}
-
-.flames .off{
-opacity:.18;
-}
-
-.contact{
-padding:90px 24px;
-text-align:center;
-border-top:1px solid rgba(181,133,60,.35);
-}
-
-.contact h2{
-font-size:54px;
-margin-bottom:18px;
-text-transform:uppercase;
-}
-
-.contact p{
-color:#d7d7d7;
-font-size:18px;
-max-width:700px;
-margin:0 auto 28px;
-line-height:1.7;
-}
-
-footer{
-padding:28px;
-text-align:center;
-color:#888;
-border-top:1px solid rgba(181,133,60,.25);
-}
-
-@media(max-width:1000px){
-.story-grid{
-grid-template-columns:1fr;
-}
-.flavor-grid{
-grid-template-columns:1fr 1fr;
-}
-}
-
-@media(max-width:700px){
-.nav{
-padding:20px;
-flex-direction:column;
-gap:18px;
-}
-.logo{
-font-size:24px;
-}
-h1{
-font-size:68px;
-}
-.story-title{
-font-size:52px;
-}
-.flavor-grid{
-grid-template-columns:1fr;
-}
+body{margin:0;background:#050505;color:#fff;font-family:Arial,sans-serif}
+nav{position:fixed;top:0;width:100%;display:flex;justify-content:space-between;padding:20px 40px;background:#000;z-index:10}
+nav a{color:#fff;text-decoration:none;margin-left:24px;font-weight:bold}
+.hero{height:100vh;background:linear-gradient(rgba(0,0,0,.6),rgba(0,0,0,.7)),url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1600&auto=format&fit=crop') center/cover no-repeat;display:flex;align-items:center;justify-content:center;text-align:center;padding:20px}
+.hero h1{font-size:90px;line-height:.9;margin:0}
+.hero p{max-width:700px;font-size:20px}
+.section{padding:90px 30px;max-width:1300px;margin:auto}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px}
+.story-title{font-size:64px;font-weight:900;line-height:.95;text-transform:uppercase}
+.story p{color:#ddd;font-size:18px;line-height:1.7}
+.story img{width:100%;border:2px solid #b5853c}
+.flavors{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.card{background:#111;padding:25px;border:1px solid rgba(181,133,60,.4)}
+.card h3{font-size:30px;margin-bottom:15px}
+.card p{color:#ddd;min-height:90px}
+.flames{font-size:24px;color:#ff5a1f}
+.off{opacity:.2}
+.contact{text-align:center;padding:90px 20px;border-top:1px solid rgba(181,133,60,.3)}
+.btn{display:inline-block;background:#b5853c;color:#000;padding:15px 26px;text-decoration:none;font-weight:bold;margin-top:20px}
+@media(max-width:900px){
+.story-grid,.flavors{grid-template-columns:1fr}
+.hero h1{font-size:60px}
+.story-title{font-size:48px}
 }
 </style>
 </head>
-
 <body>
 
-<section class="hero" id="home">
-<nav class="nav">
-<div class="logo">Eleven Alpha <span>Jerky</span></div>
-
-<div class="nav-links">
+<nav>
+<div><strong>ELEVEN ALPHA JERKY</strong></div>
+<div>
 <a href="#story">Our Story</a>
 <a href="#flavors">Flavors</a>
 <a href="#contact">Contact</a>
 </div>
 </nav>
 
-<div class="hero-content">
-<div class="kicker">Bold Flavors. Quality Jerky.</div>
-<h1>Made With Purpose.</h1>
-
-<p>
-Veteran-owned small batch jerky built through family, tradition, and years of refinement.
-</p>
-
-<div class="buttons">
-<a href="#flavors" class="btn btn-primary">View Flavors</a>
-<a href="mailto:elevenalphajerky@gmail.com" class="btn btn-secondary">Email To Order</a>
-</div>
+<section class="hero">
+<div>
+<div style="color:#b5853c;font-weight:900;letter-spacing:4px;margin-bottom:15px">BOLD FLAVORS. QUALITY JERKY.</div>
+<h1>MADE WITH PURPOSE.</h1>
+<p>Veteran-owned small batch jerky built through family, tradition, and years of refinement.</p>
+<a class="btn" href="#flavors">VIEW FLAVORS</a>
 </div>
 </section>
 
-<section class="section" id="story">
+<section class="section story" id="story">
 <div class="story-grid">
+<div>
+<div style="color:#b5853c;font-weight:900;letter-spacing:4px;margin-bottom:15px">OUR STORY</div>
+<div class="story-title">BUILT THROUGH FAMILY, TRADITION, AND YEARS OF REFINEMENT.</div>
 
-<div class="story-text">
-<div class="story-kicker">Our Story</div>
+<p>Eleven Alpha Jerky wasn’t built overnight. What started over 15 years ago making venison jerky for family and friends slowly evolved into a passion for perfecting bold flavor, consistent quality, and handcrafted production.</p>
 
-<h2 class="story-title">
-Built Through Family, Tradition, And Years Of Refinement.
-</h2>
+<p>Over the years, recipes were tested, adjusted, and refined through countless batches — balancing smoke, seasoning, heat, texture, and tenderness until each flavor developed its own identity.</p>
 
-<p>
-Eleven Alpha Jerky wasn’t built overnight. What started over 15 years ago making venison jerky for family and friends slowly evolved into a passion for perfecting bold flavor, consistent quality, and handcrafted production.
-</p>
+<p>At the center of Eleven Alpha Jerky is family. The goal was never just to make jerky — it was to build something meaningful that reflected discipline, consistency, hard work, and pride in the finished product.</p>
 
-<p>
-Over the years, recipes were tested, adjusted, and refined through countless batches — balancing smoke, seasoning, heat, texture, and tenderness until each flavor developed its own identity.
-</p>
+<p>My wife and kids became the toughest taste-test team imaginable. Every batch, flavor adjustment, and new idea was tested around the family table. Their feedback helped shape the flavors into what they are today.</p>
 
-<p>
-At the center of Eleven Alpha Jerky is family. The goal was never just to make jerky — it was to build something meaningful that reflected discipline, consistency, hard work, and pride in the finished product.
-</p>
+<p>Eleven Alpha Jerky represents more than a snack. It represents years of refinement, family support, long hours, and the mindset of building something the right way — one batch at a time.</p>
 
-<p>
-My wife and kids became the toughest taste-test team imaginable. Every batch, flavor adjustment, and new idea was tested around the family table. Their feedback helped shape the flavors into what they are today.
-</p>
-
-<p>
-Thank you for supporting a veteran-owned small business and becoming part of the journey.
-</p>
+<p>Thank you for supporting a veteran-owned small business and becoming part of the journey.</p>
 </div>
 
 <div>
-<img class="story-image" src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1200&auto=format&fit=crop" alt="Jerky">
+<img src="https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?q=80&w=1200&auto=format&fit=crop">
 </div>
-
 </div>
 </section>
 
 <section class="section" id="flavors">
+<div style="color:#b5853c;font-weight:900;letter-spacing:4px;margin-bottom:25px">OUR FLAVORS</div>
+
 <div class="flavors">
 
-<div class="flavor-kicker">Our Flavors</div>
-
-<div class="flavor-grid">
-
-<div class="flavor-card">
+<div class="card">
 <h3>Lucy's Cajun Campfire</h3>
-<p>
-A bold Cajun mesquite blend with smoky heat and deep campfire flavor.
-</p>
+<p>A bold Cajun mesquite blend with smoky heat and deep campfire flavor.</p>
 <div class="flames">🔥🔥🔥🔥<span class="off">🔥</span></div>
 </div>
 
-<div class="flavor-card">
+<div class="card">
 <h3>Cajun Hick</h3>
-<p>
-A rich hickory Cajun blend combining smooth smoke with bold Southern heat.
-</p>
+<p>A rich hickory Cajun blend combining smooth smoke with bold Southern heat.</p>
 <div class="flames">🔥🔥🔥🔥<span class="off">🔥</span></div>
 </div>
 
-<div class="flavor-card">
+<div class="card">
 <h3>Rub The Applewood</h3>
-<p>
-A bold applewood blend with smooth smoke and savory depth.
-</p>
+<p>A bold applewood blend with smooth smoke and savory depth.</p>
 <div class="flames">🔥<span class="off">🔥🔥🔥🔥</span></div>
 </div>
 
-<div class="flavor-card">
+<div class="card">
 <h3>Slap The Smoke</h3>
-<p>
-A classic BBQ flavor blend packed with rich smoke and backyard-style flavor.
-</p>
+<p>A classic BBQ flavor blend packed with rich smoke and backyard-style flavor.</p>
 <div class="flames">🔥<span class="off">🔥🔥🔥🔥</span></div>
 </div>
 
-</div>
 </div>
 </section>
 
 <section class="contact" id="contact">
-<h2>Ready To Order?</h2>
-
-<p>
-Email Eleven Alpha Jerky for current availability, custom bundles, or to place your next order.
-</p>
-
-<a href="mailto:elevenalphajerky@gmail.com" class="btn btn-primary">
-Email To Order
-</a>
+<h2>READY TO ORDER?</h2>
+<p>Email Eleven Alpha Jerky for current availability, custom bundles, or to place your next order.</p>
+<a class="btn" href="mailto:elevenalphajerky@gmail.com">EMAIL TO ORDER</a>
 </section>
 
 <footer>
-© 2026 Eleven Alpha Jerky • Veteran-Owned Small Batch Jerky
+© 2026 Eleven Alpha Jerky
 </footer>
 
 </body>
