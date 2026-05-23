@@ -1,29 +1,123 @@
-
 <!doctype html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Eleven Alpha Jerky</title>
+<style>
+:root{--cream:#fdfaf6;--charcoal:#1a1a1a;--gold:#b5853c}
+*{box-sizing:border-box}
+body{margin:0;padding:20px;background:#e5e5e5;color:var(--charcoal);font-family:Georgia,serif}
+.wrap{max-width:1050px;margin:auto;background:var(--cream);border:1px solid var(--charcoal);padding:42px;box-shadow:0 10px 30px rgba(0,0,0,.12)}
+header{text-align:center;border-bottom:1px solid var(--charcoal);padding-bottom:28px;margin-bottom:35px}
+h1{font-size:44px;text-transform:uppercase;letter-spacing:4px;margin:0}
+.tag{text-transform:uppercase;letter-spacing:2px;margin-top:10px;color:#665}
+.back{display:inline-block;margin-top:18px;border:1px solid var(--charcoal);padding:10px 16px;color:var(--charcoal);text-decoration:none;text-transform:uppercase;font-size:12px}
+.intro{text-align:center;line-height:1.7;max-width:760px;margin:0 auto 35px}
+.flavors{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-bottom:42px}
+.card{border-bottom:1px solid #d7cec0;padding-bottom:22px}
+.card h3{font-size:24px;margin:0 0 8px}
+.card p{line-height:1.6;color:#4a433c}
+.price{font-weight:bold;color:var(--gold);margin-bottom:10px}
+.controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+input{padding:10px;border:1px solid #bfb6aa;background:transparent;font-family:inherit}
+input[type=number]{width:70px;text-align:center}
+button{background:var(--charcoal);color:var(--cream);border:none;padding:11px 16px;cursor:pointer;text-transform:uppercase;font-weight:bold}
+button:hover{background:var(--gold);color:var(--charcoal)}
+.order{border:1px solid var(--charcoal);background:#fffaf1;padding:28px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.customer input{width:100%;margin-bottom:14px}
+.cart{background:#f9f4ee;border:1px dashed var(--charcoal);padding:20px}
+#cart-items{list-style:none;padding:0;margin:15px 0}
+.row{display:grid;grid-template-columns:1fr auto auto;gap:10px;border-bottom:1px solid #e0d8cd;padding-bottom:8px;margin-bottom:10px}
+.remove{color:#777;text-decoration:underline;cursor:pointer;font-size:12px}
+.total{border-top:2px solid var(--charcoal);padding-top:12px;margin-top:14px;display:flex;justify-content:space-between;font-size:19px;font-weight:bold}
+.final{grid-column:span 2;width:100%;font-size:22px;padding:20px;margin-top:10px;font-family:Georgia,serif}
+.note{font-size:13px;font-style:italic;color:#5c554c;line-height:1.6}
+@media(max-width:768px){body{padding:10px}.wrap{padding:25px}.flavors,.grid{grid-template-columns:1fr}.final{grid-column:span 1}.row{grid-template-columns:1fr}}
+</style>
 </head>
 <body>
+<div class="wrap">
+<header>
+<h1>Order Jerky</h1>
+<div class="tag">Eleven Alpha Jerky • $10 Per Pack</div>
+<a class="back" href="index.html">Back To Home</a>
+</header>
+
+<p class="intro">Select your flavors below. Each pack is $10. When you finalize the order, your email app will open with your name, phone number, email, selected items, and order total already formatted.</p>
+
+<div class="flavors">
+<div class="card"><h3>Lucy's Cajun Campfire</h3><p>A bold Cajun Mesquite blend delivering smoky campfire flavor with a warm Cajun kick.</p><div class="price">$10 per pack</div><div class="controls"><input type="number" id="qty-cajun" value="1" min="1"><button onclick="addToCart('Lucys Cajun Campfire','qty-cajun')">Add to Cart</button></div></div>
+<div class="card"><h3>Cajun Hick</h3><p>A hickory Cajun flavor combining deep smoke with balanced Cajun seasoning and heat.</p><div class="price">$10 per pack</div><div class="controls"><input type="number" id="qty-hick" value="1" min="1"><button onclick="addToCart('Cajun Hick','qty-hick')">Add to Cart</button></div></div>
+<div class="card"><h3>Rub the Applewood</h3><p>A bold Applewood blend with smooth smoke, rich seasoning, and classic jerky flavor.</p><div class="price">$10 per pack</div><div class="controls"><input type="number" id="qty-apple" value="1" min="1"><button onclick="addToCart('Rub the Applewood','qty-apple')">Add to Cart</button></div></div>
+<div class="card"><h3>Slap the Smoke</h3><p>A rich BBQ flavor blend packed with savory smoke and bold backyard barbecue character.</p><div class="price">$10 per pack</div><div class="controls"><input type="number" id="qty-smoke" value="1" min="1"><button onclick="addToCart('Slap the Smoke','qty-smoke')">Add to Cart</button></div></div>
+</div>
+
+<div class="order" id="order-form">
+<h2 style="text-align:center;text-transform:uppercase;margin-top:0">Review & Email Order</h2>
+<div class="grid">
+<div class="customer">
+<input id="cust-name" type="text" placeholder="Full Name">
+<input id="cust-phone" type="tel" placeholder="Phone Number">
+<input id="cust-email" type="email" placeholder="Email Address">
+<p class="note">This sends an order request by email. Payment is not processed online.</p>
+</div>
+<div class="cart">
+<strong>Your Cart:</strong>
+<ul id="cart-items"><li style="color:#888">No items added yet.</li></ul>
+<div class="total"><span>Total:</span><span id="cart-total">$0</span></div>
+<button style="margin-top:12px;background:transparent;color:#1a1a1a;border:1px solid #1a1a1a" onclick="clearCart()">Clear Cart</button>
+</div>
+<button class="final" onclick="sendOrderEmail()">Finalize & Email Order</button>
+</div>
+</div>
+</div>
+
 <script>
-const ORDER_EMAIL="elevenalphajerky@gmail.com";
+const PACK_PRICE=10;
+const ORDER_EMAIL="orders@elevenalphajerky.com";
+let cart=[];
 
-function sendOrderEmail() {
-  const subject = encodeURIComponent("Eleven Alpha Jerky Order");
-  const body = encodeURIComponent("Customer order request");
-  window.location.href =
-    `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+function addToCart(flavor,inputId){
+ const qty=parseInt(document.getElementById(inputId).value,10);
+ if(!qty||qty<1){alert("Please enter a valid quantity.");return;}
+ const existing=cart.find(i=>i.name===flavor);
+ if(existing){existing.qty+=qty;}else{cart.push({name:flavor,qty:qty,price:PACK_PRICE});}
+ document.getElementById(inputId).value=1;
+ saveCart(); renderCart();
+ document.getElementById("order-form").scrollIntoView({behavior:"smooth"});
 }
+
+function renderCart(){
+ const cartEl=document.getElementById("cart-items");
+ const totalEl=document.getElementById("cart-total");
+ if(cart.length===0){cartEl.innerHTML='<li style="color:#888">No items added yet.</li>'; totalEl.textContent="$0"; return;}
+ cartEl.innerHTML=cart.map((item,index)=>{
+  const line=item.qty*item.price;
+  return `<li class="row"><span>${item.qty}x ${item.name}</span><span>$${line}</span><span class="remove" onclick="removeItem(${index})">Remove</span></li>`;
+ }).join("");
+ totalEl.textContent="$"+getTotal();
+}
+
+function getTotal(){return cart.reduce((sum,item)=>sum+(item.qty*item.price),0);}
+function removeItem(index){cart.splice(index,1);saveCart();renderCart();}
+function clearCart(){cart=[];saveCart();renderCart();}
+function saveCart(){localStorage.setItem("elevenAlphaCart",JSON.stringify(cart));}
+function loadCart(){try{cart=JSON.parse(localStorage.getItem("elevenAlphaCart"))||[];}catch(e){cart=[];}}
+
+function sendOrderEmail(){
+ const name=document.getElementById("cust-name").value.trim();
+ const phone=document.getElementById("cust-phone").value.trim();
+ const email=document.getElementById("cust-email").value.trim();
+ if(!name||!phone||!email||cart.length===0){alert("Please enter your name, phone number, email, and add at least one flavor to your cart.");return;}
+ const orderLines=cart.map(item=>`- ${item.name}: ${item.qty} pack(s) x $${item.price} = $${item.qty*item.price}`).join("\n");
+ const subject=`Eleven Alpha Jerky Order Request - ${name}`;
+ const body=`CUSTOMER INFORMATION\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n\nORDER SUMMARY\n${orderLines}\n\nTOTAL: $${getTotal()}\n\nPlease contact me to confirm availability, payment instructions, and pickup/delivery details.`;
+ window.location.href=`mailto:${ORDER_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+}
+
+loadCart(); renderCart();
 </script>
-
-<h1>Eleven Alpha Jerky</h1>
-<p>Email routing updated correctly.</p>
-
-<button onclick="sendOrderEmail()">
-Test Email Order
-</button>
-
 </body>
 </html>
