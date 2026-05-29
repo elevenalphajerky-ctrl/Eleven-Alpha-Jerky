@@ -142,6 +142,75 @@
       background: #030303;
     }
 
+
+    .meat-sticks {
+      background: #050505;
+      border-top: 2px solid rgba(181,133,60,.75);
+      padding: 54px 22px 64px;
+      text-align: center;
+    }
+
+    .meat-sticks-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .danger-card {
+      max-width: 430px;
+      margin: 26px auto 0;
+      border: 2px solid rgba(181,133,60,.72);
+      background: radial-gradient(circle at center, rgba(181,133,60,.14), transparent 42%), #090909;
+      padding: 12px 12px 26px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.45);
+    }
+
+    .danger-image {
+      height: 210px;
+      border: 1px solid rgba(181,133,60,.35);
+      background:
+        linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.55)),
+        radial-gradient(circle at 25% 35%, rgba(80,120,45,.6), transparent 20%),
+        radial-gradient(circle at 65% 40%, rgba(210,140,35,.55), transparent 24%),
+        radial-gradient(circle at 45% 70%, rgba(90,35,18,.75), transparent 28%),
+        #1b120c;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .danger-image-text {
+      color: rgba(255,255,255,.9);
+      font-size: 31px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      font-weight: 1000;
+      text-shadow: 0 3px 8px rgba(0,0,0,.8);
+    }
+
+    .danger-content h2 {
+      font-size: clamp(34px, 6vw, 50px);
+      margin-top: 24px;
+    }
+
+    .danger-meta {
+      color: #b5853c;
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-top: 20px;
+    }
+
+    .danger-flames {
+      margin-top: 16px;
+      font-size: 28px;
+      letter-spacing: .08em;
+    }
+
+    .danger-flames .off {
+      opacity: .28;
+      filter: grayscale(1);
+    }
+
     @media (max-width: 700px) {
       .contact {
         padding: 46px 16px 54px;
@@ -177,7 +246,7 @@
         <h2>Ready To Build Your Pack?</h2>
         <div class="accent"></div>
         <p>Email Eleven Alpha Jerky to check current availability, build a custom bundle, or reserve your next order.</p>
-        <a class="button" href="order.html">Email To Order</a>
+        <a class="button" href="order.html">Order Now</a>
         <div class="email">elevenalphajerky@gmail.com</div>
       </div>
     </section>
@@ -185,6 +254,31 @@
     <footer>
       © 2026 Eleven Alpha Jerky • Veteran-Owned Small Batch Jerky
     </footer>
-  </main>
+  
+    <section class="meat-sticks" id="meat-sticks">
+      <div class="meat-sticks-inner">
+        <div class="eyebrow">Featured Meat Sticks</div>
+        <div class="danger-card">
+          <div class="danger-image">
+            <div class="danger-image-text">Danger Close</div>
+          </div>
+          <div class="danger-content">
+            <h2>Danger Close Sticks</h2>
+            <div class="accent"></div>
+            <p>
+              Jalapeño Cheddar Meat Sticks packed with bold smoke, real cheddar flavor,
+              and a controlled jalapeño kick.
+            </p>
+            <div class="danger-meta">$10 per 3 oz pack</div>
+            <div class="danger-flames">
+              <span>🔥</span><span>🔥</span><span>🔥</span><span class="off">🔥</span><span class="off">🔥</span>
+            </div>
+          </div>
+        </div>
+        <a class="button" href="order.html">Order Now</a>
+      </div>
+    </section>
+
+</main>
 </body>
 </html>
