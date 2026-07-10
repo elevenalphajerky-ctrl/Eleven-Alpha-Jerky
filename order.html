@@ -34,6 +34,33 @@ input{padding:8px;margin:5px 0}
 .fulfillment-panel input[type="text"]{width:min(100%,420px)}
 .fulfillment-note{color:#bbb;font-size:13px;margin-top:8px}
 
+
+.promo-banner{
+  margin:0 0 22px;
+  padding:16px 18px;
+  border:2px solid #b5853c;
+  border-radius:8px;
+  background:linear-gradient(135deg,rgba(181,133,60,.18),rgba(181,133,60,.05));
+  text-align:center;
+}
+.promo-banner strong{
+  display:block;
+  color:#d9a854;
+  font-size:22px;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+}
+.promo-banner span{
+  display:block;
+  margin-top:5px;
+  color:#eee;
+  font-size:14px;
+}
+.total-breakdown{margin-top:14px}
+.total-line{display:flex;justify-content:space-between;gap:18px;padding:4px 0}
+.discount-line{color:#d9a854;font-weight:bold}
+.final-total{border-top:1px solid #555;margin-top:7px;padding-top:10px;font-size:20px;font-weight:bold}
+
 </style>
 </head>
 <body>
@@ -43,6 +70,11 @@ input{padding:8px;margin:5px 0}
 <div class="cart-summary" id="cartSummary">0 items in cart</div>
 </div>
 <h1>Order Eleven Alpha Jerky</h1>
+
+<div class="promo-banner">
+  <strong>Buy 4, Get 1 Free</strong>
+  <span>Mix and match any five products. The discount applies automatically in your cart.</span>
+</div>
 
 <div class="flavor">
 <h3>Lucy's Cajun Campfire - $10</h3>
@@ -125,7 +157,11 @@ input{padding:8px;margin:5px 0}
 
 <div id="cartItems">No items added yet.</div>
 
-<h3 id="total">Total: $0</h3>
+<div class="total-breakdown">
+  <div class="total-line"><span>Subtotal</span><span id="subtotal">$0</span></div>
+  <div class="total-line discount-line"><span>Buy 4, Get 1 Free Discount</span><span id="discount">-$0</span></div>
+  <div class="total-line final-total"><span>Total</span><span id="total">$0</span></div>
+</div>
 
 <button onclick="sendOrder()">Finalize Order</button>
 </div>
@@ -146,6 +182,17 @@ function loadCart() {
 }
 
 let cart = loadCart();
+
+
+function calculateTotals() {
+  const itemCount = cart.reduce((sum, item) => sum + Number(item.qty || 0), 0);
+  const subtotal = cart.reduce((sum, item) => sum + Number(item.qty || 0) * PRICE, 0);
+  const freeItems = Math.floor(itemCount / 5);
+  const discount = freeItems * PRICE;
+  const total = Math.max(0, subtotal - discount);
+
+  return { itemCount, subtotal, freeItems, discount, total };
+}
 
 function saveCart() {
   try {
@@ -212,8 +259,10 @@ function renderCart() {
     `).join("");
   }
 
-  const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
-  document.getElementById("total").textContent = `Total: $${total}`;
+  const totals = calculateTotals();
+  document.getElementById("subtotal").textContent = `$${totals.subtotal}`;
+  document.getElementById("discount").textContent = `-$${totals.discount}`;
+  document.getElementById("total").textContent = `$${totals.total}`;
 }
 
 function sendOrder() {
@@ -255,7 +304,7 @@ ${city}, ${state} ${zip}`;
   }
 
   const items = cart.map(item => `- ${item.name} x${item.qty}`).join("\n");
-  const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
+  const totals = calculateTotals();
   const subject = encodeURIComponent("Eleven Alpha Jerky Order");
   const body = encodeURIComponent(
 `CUSTOMER INFORMATION
@@ -272,7 +321,9 @@ ORDER:
 
 ${items}
 
-PRODUCT TOTAL: $${total}${fulfillmentChoice.value === "Shipping" ? "\nShipping cost: To be confirmed" : ""}`
+SUBTOTAL: $${totals.subtotal}
+BUY 4, GET 1 FREE DISCOUNT: -$${totals.discount}
+TOTAL AFTER DISCOUNT: $${totals.total}${fulfillmentChoice.value === "Shipping" ? "\nShipping cost: To be confirmed" : ""}`
   );
 
   window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
