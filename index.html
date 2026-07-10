@@ -231,7 +231,76 @@
       .reviews-widget { min-height:500px; }
     }
 
-  </style>
+  
+    /* iPhone/mobile navigation fix:
+       keep the image as the positioning reference and enlarge tap targets */
+    @media (max-width:700px) {
+      .site {
+        margin-bottom:250px;
+      }
+
+      .reviews-panel {
+        position:absolute;
+        left:14px;
+        right:14px;
+        top:100%;
+        width:auto;
+        height:auto;
+        margin:18px 0 24px;
+        padding:22px 16px;
+      }
+
+      .click-zone {
+        z-index:40;
+        touch-action:manipulation;
+        -webkit-tap-highlight-color:rgba(181,133,60,.22);
+      }
+
+      /* Larger, forgiving mobile tap areas */
+      .flavors-link {
+        left:16%;
+        top:.55%;
+        width:16%;
+        height:4%;
+      }
+
+      .shop-link {
+        left:27%;
+        top:.55%;
+        width:13%;
+        height:4%;
+      }
+
+      .view-flavors-link {
+        left:3.5%;
+        top:24.6%;
+        width:19%;
+        height:5%;
+      }
+
+      .hero-order-link {
+        left:20%;
+        top:24.6%;
+        width:17%;
+        height:5%;
+      }
+
+      .product-1 { left:.5%; top:61.6%; width:16.8%; height:18%; }
+      .product-2 { left:16.7%; top:61.6%; width:16.8%; height:18%; }
+      .product-3 { left:32.5%; top:61.6%; width:16.8%; height:18%; }
+      .product-4 { left:48.2%; top:61.6%; width:16.8%; height:18%; }
+      .product-5 { left:64%; top:61.6%; width:16.8%; height:18%; }
+      .product-6 { left:79.5%; top:61.6%; width:20%; height:18%; }
+
+      .contact-order-link {
+        left:40%;
+        top:90.8%;
+        width:20%;
+        height:4.5%;
+      }
+    }
+
+</style>
 </head>
 <body>
   <main class="site" id="home">
@@ -394,6 +463,32 @@
       window.addEventListener("storage", updateCartCount);
       document.addEventListener("visibilitychange", function () {
         if (!document.hidden) updateCartCount();
+      });
+    })();
+  </script>
+
+
+  <script>
+    (function () {
+      function directNavigate(selector, destination) {
+        const element = document.querySelector(selector);
+        if (!element) return;
+        element.addEventListener("touchend", function (event) {
+          event.preventDefault();
+          window.location.href = destination;
+        }, { passive: false });
+      }
+
+      directNavigate(".hero-order-link", "order.html");
+      directNavigate(".shop-link", "order.html");
+
+      const flavorTargets = document.querySelectorAll(".view-flavors-link, .flavors-link");
+      flavorTargets.forEach(function (element) {
+        element.addEventListener("touchend", function (event) {
+          event.preventDefault();
+          const target = document.getElementById("flavors");
+          if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, { passive: false });
       });
     })();
   </script>
