@@ -1,977 +1,165 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Eleven Alpha Jerky</title>
-  <meta name="description" content="Veteran-owned small batch jerky built through family, tradition, and years of refinement.">
-  <style>
-    :root{
-      --bg:#050505;
-      --panel:#0d0d0d;
-      --panel2:#151515;
-      --gold:#b5853c;
-      --gold2:#d9a854;
-      --text:#ffffff;
-      --muted:#c7c7c7;
-      --border:rgba(181,133,60,.58);
-      --shadow:0 22px 55px rgba(0,0,0,.48);
-      --radius:16px;
-      --max:1180px;
-    }
-
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth;background:var(--bg)}
-    body{
-      margin:0;
-      background:
-        radial-gradient(circle at 50% 0,rgba(181,133,60,.10),transparent 28rem),
-        var(--bg);
-      color:var(--text);
-      font-family:Arial,Helvetica,sans-serif;
-      line-height:1.55;
-    }
-
-    a{color:inherit}
-    button,a{touch-action:manipulation}
-    img{max-width:100%}
-
-    .container{
-      width:min(calc(100% - 32px),var(--max));
-      margin-inline:auto;
-    }
-
-    .site-header{
-      position:sticky;
-      top:0;
-      z-index:100;
-      border-bottom:1px solid rgba(181,133,60,.36);
-      background:rgba(5,5,5,.94);
-      backdrop-filter:blur(12px);
-    }
-
-    .nav{
-      min-height:74px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:20px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      text-decoration:none;
-      min-width:0;
-    }
-
-    .brand-mark{
-      width:46px;
-      height:46px;
-      border:2px solid var(--gold);
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      font-weight:1000;
-      letter-spacing:-.06em;
-      color:var(--gold2);
-      box-shadow:0 0 0 4px rgba(181,133,60,.08);
-      flex:0 0 auto;
-    }
-
-    .brand-copy strong{
-      display:block;
-      font-size:18px;
-      line-height:1;
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
-
-    .brand-copy span{
-      display:block;
-      margin-top:4px;
-      color:var(--gold2);
-      font-size:11px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-    }
-
-    .nav-links{
-      display:flex;
-      align-items:center;
-      gap:20px;
-    }
-
-    .nav-links a{
-      text-decoration:none;
-      color:#efefef;
-      font-size:14px;
-      font-weight:800;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-    }
-
-    .nav-links a:hover{color:var(--gold2)}
-
-    .cart-link{
-      position:relative;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 13px;
-      border:1px solid var(--gold);
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:900;
-      color:var(--gold2);
-    }
-
-    .cart-count{
-      min-width:22px;
-      height:22px;
-      padding:0 6px;
-      border-radius:999px;
-      display:grid;
-      place-items:center;
-      background:var(--gold);
-      color:#080808;
-      font-size:12px;
-      font-weight:1000;
-    }
-
-    .menu-button{
-      display:none;
-      border:1px solid var(--gold);
-      background:transparent;
-      color:#fff;
-      border-radius:8px;
-      padding:9px 11px;
-      font-weight:900;
-    }
-
-    .hero{
-      min-height:640px;
-      display:grid;
-      align-items:center;
-      padding:76px 0;
-      overflow:hidden;
-      border-bottom:1px solid rgba(181,133,60,.24);
-      background:
-        linear-gradient(90deg,rgba(0,0,0,.96) 0%,rgba(0,0,0,.86) 42%,rgba(0,0,0,.36) 100%),
-        radial-gradient(circle at 78% 35%,rgba(202,112,34,.34),transparent 17rem),
-        linear-gradient(135deg,#120b07 0%,#25150d 47%,#090909 100%);
-    }
-
-    .hero-grid{
-      display:grid;
-      grid-template-columns:minmax(0,1.1fr) minmax(320px,.9fr);
-      align-items:center;
-      gap:52px;
-    }
-
-    .eyebrow{
-      color:var(--gold2);
-      font-size:13px;
-      font-weight:1000;
-      letter-spacing:.25em;
-      text-transform:uppercase;
-    }
-
-    h1,h2,h3,p{margin-top:0}
-    h1{
-      margin:15px 0 20px;
-      max-width:790px;
-      font-size:clamp(46px,7.5vw,88px);
-      line-height:.92;
-      letter-spacing:-.055em;
-      text-transform:uppercase;
-    }
-
-    .hero-copy p{
-      max-width:700px;
-      color:#e1e1e1;
-      font-size:clamp(17px,2vw,21px);
-    }
-
-    .hero-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:12px;
-      margin-top:28px;
-    }
-
-    .button{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:48px;
-      padding:13px 20px;
-      border:2px solid var(--gold);
-      border-radius:7px;
-      text-decoration:none;
-      font-weight:1000;
-      text-transform:uppercase;
-      letter-spacing:.07em;
-      cursor:pointer;
-    }
-
-    .button.primary{
-      background:var(--gold);
-      color:#050505;
-    }
-
-    .button.secondary{
-      background:transparent;
-      color:#fff;
-    }
-
-    .button:hover{filter:brightness(1.1)}
-
-    .hero-art{
-      min-height:410px;
-      border:2px solid var(--border);
-      border-radius:24px;
-      position:relative;
-      overflow:hidden;
-      background:
-        radial-gradient(circle at 50% 40%,rgba(213,150,63,.20),transparent 15rem),
-        linear-gradient(145deg,#17100c,#070707);
-      box-shadow:var(--shadow);
-    }
-
-    .hero-art::before{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:
-        repeating-linear-gradient(105deg,transparent 0 34px,rgba(255,255,255,.018) 35px 36px),
-        linear-gradient(transparent,rgba(0,0,0,.64));
-    }
-
-    .jerky-bowl{
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:300px;
-      height:165px;
-      transform:translate(-50%,-38%);
-      border-radius:50%;
-      background:
-        radial-gradient(ellipse at 50% 42%,#7a351c 0 12%,#4b1f12 13% 25%,#2a100a 26% 44%,#080504 45% 100%);
-      border:7px solid #2a211c;
-      box-shadow:0 26px 38px rgba(0,0,0,.56);
-    }
-
-    .jerky-strip{
-      position:absolute;
-      width:35px;
-      height:125px;
-      border-radius:10px 22px 8px 20px;
-      background:linear-gradient(90deg,#341008,#783219 48%,#2b0c07);
-      box-shadow:inset 0 0 0 2px rgba(255,180,90,.06),0 9px 15px rgba(0,0,0,.3);
-    }
-
-    .jerky-strip:nth-child(1){left:72px;top:8px;transform:rotate(-31deg)}
-    .jerky-strip:nth-child(2){left:112px;top:-2px;transform:rotate(-12deg)}
-    .jerky-strip:nth-child(3){left:153px;top:7px;transform:rotate(10deg)}
-    .jerky-strip:nth-child(4){left:193px;top:14px;transform:rotate(29deg)}
-    .jerky-strip:nth-child(5){left:131px;top:29px;transform:rotate(48deg);height:105px}
-
-    .hero-seal{
-      position:absolute;
-      left:24px;
-      bottom:22px;
-      border:1px solid var(--gold);
-      border-radius:999px;
-      padding:9px 13px;
-      color:var(--gold2);
-      font-size:12px;
-      font-weight:1000;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-      background:rgba(0,0,0,.72);
-    }
-
-    .section{padding:82px 0}
-    .section.alt{background:#090909}
-
-    .section-heading{
-      max-width:780px;
-      margin:0 auto 42px;
-      text-align:center;
-    }
-
-    .section-heading h2{
-      margin:10px 0 15px;
-      font-size:clamp(36px,5vw,58px);
-      line-height:1;
-      text-transform:uppercase;
-      letter-spacing:-.04em;
-    }
-
-    .section-heading p{
-      color:var(--muted);
-      font-size:17px;
-    }
-
-    .story-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:38px;
-      align-items:stretch;
-    }
-
-    .story-card{
-      min-height:100%;
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      background:
-        radial-gradient(circle at 25% 10%,rgba(181,133,60,.11),transparent 15rem),
-        var(--panel);
-      padding:34px;
-      box-shadow:var(--shadow);
-    }
-
-    .story-card h3{
-      margin-bottom:13px;
-      font-size:28px;
-      text-transform:uppercase;
-    }
-
-    .story-card p{color:var(--muted)}
-
-    .products{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:22px;
-    }
-
-    .product-card{
-      display:flex;
-      flex-direction:column;
-      overflow:hidden;
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      background:var(--panel);
-      box-shadow:0 14px 34px rgba(0,0,0,.34);
-      transition:transform .2s ease,border-color .2s ease;
-    }
-
-    .product-card:hover{
-      transform:translateY(-4px);
-      border-color:var(--gold2);
-    }
-
-    .product-art{
-      height:205px;
-      position:relative;
-      overflow:hidden;
-      border-bottom:1px solid rgba(181,133,60,.32);
-      background:
-        radial-gradient(circle at 55% 35%,rgba(181,133,60,.22),transparent 9rem),
-        linear-gradient(145deg,#27140c,#080808 72%);
-    }
-
-    .product-art::before{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:50%;
-      width:170px;
-      height:92px;
-      transform:translate(-50%,-45%);
-      border-radius:50%;
-      background:radial-gradient(ellipse at 50% 40%,#7b3219 0 18%,#46190e 19% 39%,#130805 40% 100%);
-      border:5px solid #31251e;
-      box-shadow:0 15px 25px rgba(0,0,0,.45);
-    }
-
-    .product-art::after{
-      content:"";
-      position:absolute;
-      left:50%;
-      top:48%;
-      width:112px;
-      height:75px;
-      transform:translate(-50%,-50%) rotate(-8deg);
-      background:
-        linear-gradient(78deg,transparent 0 5%,#702d16 6% 20%,transparent 21% 28%,#4b170c 29% 46%,transparent 47% 54%,#8b3b1d 55% 70%,transparent 71% 78%,#3f130b 79% 93%,transparent 94%);
-      filter:drop-shadow(0 7px 7px rgba(0,0,0,.45));
-    }
-
-    .product-art.sticks::before{
-      width:210px;
-      height:78px;
-      border-radius:20px;
-      background:
-        repeating-linear-gradient(90deg,#8b3319 0 21px,#52170d 22px 28px,#a54422 29px 49px);
-      border:0;
-      transform:translate(-50%,-45%) rotate(-8deg);
-    }
-
-    .product-art.sticks::after{
-      display:none;
-    }
-
-    .product-art.pacific{
-      background:
-        radial-gradient(circle at 25% 35%,rgba(30,95,95,.28),transparent 8rem),
-        radial-gradient(circle at 78% 22%,rgba(181,133,60,.24),transparent 8rem),
-        linear-gradient(145deg,#10292a,#130b08 72%);
-    }
-
-    .product-content{
-      padding:24px;
-      display:flex;
-      flex-direction:column;
-      flex:1;
-    }
-
-    .product-content h3{
-      margin-bottom:7px;
-      font-size:24px;
-      text-transform:uppercase;
-      line-height:1.05;
-    }
-
-    .flavor-type{
-      color:var(--gold2);
-      font-size:13px;
-      font-weight:1000;
-      text-transform:uppercase;
-      letter-spacing:.12em;
-    }
-
-    .product-content p{
-      color:var(--muted);
-      margin:14px 0 18px;
-      flex:1;
-    }
-
-    .product-bottom{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:15px;
-      padding-top:16px;
-      border-top:1px solid #2d2d2d;
-    }
-
-    .price{
-      font-size:21px;
-      font-weight:1000;
-      color:var(--gold2);
-    }
-
-    .flames{
-      letter-spacing:.07em;
-      white-space:nowrap;
-    }
-
-    .flames .off{
-      opacity:.22;
-      filter:grayscale(1);
-    }
-
-    .promo{
-      margin-top:32px;
-      padding:28px;
-      border:2px solid var(--gold);
-      border-radius:var(--radius);
-      text-align:center;
-      background:linear-gradient(135deg,rgba(181,133,60,.16),rgba(181,133,60,.03));
-    }
-
-    .promo strong{
-      display:block;
-      font-size:clamp(27px,4vw,42px);
-      color:var(--gold2);
-      text-transform:uppercase;
-      line-height:1;
-    }
-
-    .promo p{
-      margin:10px 0 0;
-      color:#e6e6e6;
-    }
-
-    .benefits{
-      display:grid;
-      grid-template-columns:repeat(4,1fr);
-      gap:18px;
-    }
-
-    .benefit{
-      border:1px solid var(--border);
-      border-radius:14px;
-      background:var(--panel);
-      padding:24px 18px;
-      text-align:center;
-    }
-
-    .benefit-icon{
-      width:54px;
-      height:54px;
-      margin:0 auto 13px;
-      border-radius:50%;
-      display:grid;
-      place-items:center;
-      border:2px solid var(--gold);
-      color:var(--gold2);
-      font-weight:1000;
-      font-size:18px;
-    }
-
-    .benefit strong{
-      display:block;
-      text-transform:uppercase;
-      letter-spacing:.06em;
-    }
-
-    .benefit span{
-      display:block;
-      margin-top:6px;
-      color:var(--muted);
-      font-size:14px;
-    }
-
-    .bottom-grid{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:24px;
-      align-items:stretch;
-    }
-
-    .bottom-card{
-      border:2px solid var(--border);
-      border-radius:var(--radius);
-      background:
-        radial-gradient(circle at center,rgba(181,133,60,.10),transparent 18rem),
-        #090909;
-      padding:38px;
-      box-shadow:var(--shadow);
-    }
-
-    .bottom-card h2{
-      margin:10px 0 14px;
-      font-size:clamp(31px,4.5vw,49px);
-      line-height:.98;
-      text-transform:uppercase;
-    }
-
-    .bottom-card p{color:var(--muted)}
-
-    .review-actions{
-      display:flex;
-      flex-wrap:wrap;
-      gap:10px;
-      margin-top:24px;
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      z-index:500;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:18px;
-      background:rgba(0,0,0,.88);
-    }
-
-    .modal.open{display:flex}
-
-    .modal-panel{
-      width:min(100%,920px);
-      max-height:92vh;
-      overflow:auto;
-      border:2px solid var(--gold);
-      border-radius:14px;
-      background:#0a0a0a;
-      padding:22px;
-      box-shadow:0 30px 90px #000;
-    }
-
-    .modal-head{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:18px;
-      margin-bottom:14px;
-    }
-
-    .modal-head h2{
-      margin:0;
-      text-transform:uppercase;
-      font-size:25px;
-    }
-
-    .close-button{
-      border:1px solid var(--gold);
-      background:transparent;
-      color:#fff;
-      border-radius:7px;
-      padding:9px 12px;
-      font-weight:900;
-      cursor:pointer;
-    }
-
-    footer{
-      padding:28px 16px;
-      text-align:center;
-      color:#9a9a9a;
-      border-top:1px solid rgba(181,133,60,.32);
-      font-size:13px;
-    }
-
-    @media (max-width:900px){
-      .hero-grid,.story-grid,.bottom-grid{grid-template-columns:1fr}
-      .hero{min-height:auto}
-      .hero-art{min-height:360px}
-      .products{grid-template-columns:repeat(2,minmax(0,1fr))}
-      .benefits{grid-template-columns:repeat(2,1fr)}
-    }
-
-    @media (max-width:720px){
-      .container{width:min(calc(100% - 24px),var(--max))}
-      .nav{min-height:66px}
-      .brand-copy strong{font-size:15px}
-      .brand-copy span{display:none}
-      .menu-button{display:block}
-      .nav-links{
-        position:absolute;
-        left:12px;
-        right:12px;
-        top:66px;
-        display:none;
-        flex-direction:column;
-        align-items:stretch;
-        gap:0;
-        padding:12px;
-        border:1px solid var(--border);
-        border-radius:12px;
-        background:#090909;
-        box-shadow:var(--shadow);
-      }
-      .nav-links.open{display:flex}
-      .nav-links a{
-        padding:13px 11px;
-        border-bottom:1px solid #242424;
-      }
-      .nav-links a:last-child{border-bottom:0}
-      .desktop-cart{display:none}
-      .hero{padding:54px 0}
-      .hero-grid{gap:30px}
-      h1{font-size:clamp(43px,15vw,67px)}
-      .hero-art{min-height:315px}
-      .jerky-bowl{width:245px;height:135px}
-      .jerky-strip{height:102px;width:29px}
-      .jerky-strip:nth-child(1){left:58px}
-      .jerky-strip:nth-child(2){left:91px}
-      .jerky-strip:nth-child(3){left:125px}
-      .jerky-strip:nth-child(4){left:158px}
-      .jerky-strip:nth-child(5){left:107px;height:88px}
-      .section{padding:62px 0}
-      .products{grid-template-columns:1fr}
-      .product-art{height:230px}
-      .benefits{grid-template-columns:1fr}
-      .story-card,.bottom-card{padding:27px 22px}
-      .button{width:100%}
-      .hero-actions,.review-actions{flex-direction:column}
-    }
-
-    @media (prefers-reduced-motion:reduce){
-      html{scroll-behavior:auto}
-      *{transition:none!important}
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eleven Alpha Jerky</title>
+<meta name="description" content="Veteran-owned small batch jerky built through family, tradition, and years of refinement.">
+<style>
+:root{
+  --bg:#050505;--panel:#0b0b0b;--panel2:#111;--gold:#b5853c;--gold2:#d8a04a;
+  --text:#fff;--muted:#c9c9c9;--line:rgba(181,133,60,.55);--max:1180px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Arial,Helvetica,sans-serif;line-height:1.55}
+img{display:block;width:100%}
+a{color:inherit}
+.container{width:min(calc(100% - 28px),var(--max));margin:auto}
+.header{position:sticky;top:0;z-index:100;background:rgba(5,5,5,.96);border-bottom:1px solid var(--line);backdrop-filter:blur(10px)}
+.nav{min-height:70px;display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand-badge{width:44px;height:44px;border:2px solid var(--gold);border-radius:50%;display:grid;place-items:center;color:var(--gold2);font-weight:1000}
+.brand strong{display:block;font-size:16px;line-height:1;text-transform:uppercase;letter-spacing:.05em}
+.brand span{display:block;margin-top:4px;color:var(--gold2);font-size:10px;letter-spacing:.13em;text-transform:uppercase}
+.nav-links{margin-left:auto;display:flex;align-items:center;gap:19px}
+.nav-links a{text-decoration:none;text-transform:uppercase;font-size:13px;font-weight:900;letter-spacing:.06em}
+.nav-links a:hover{color:var(--gold2)}
+.cart-link{display:flex;align-items:center;gap:7px;border:1px solid var(--gold);border-radius:999px;padding:9px 12px;text-decoration:none;color:var(--gold2);font-weight:1000}
+.cart-count{min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--gold);color:#050505;display:grid;place-items:center;font-size:12px}
+.menu-btn{display:none;margin-left:auto;background:transparent;border:1px solid var(--gold);color:#fff;border-radius:8px;padding:9px 12px;font-weight:900}
+.hero{position:relative;min-height:590px;display:grid;align-items:center;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;background:url("assets/hero.jpg") center/cover no-repeat}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.92) 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.18) 100%)}
+.hero-content{position:relative;z-index:2;max-width:650px;padding:76px 0}
+.eyebrow{color:var(--gold2);text-transform:uppercase;letter-spacing:.22em;font-size:12px;font-weight:1000}
+h1,h2,h3,p{margin-top:0}
+h1{margin:14px 0 20px;font-size:clamp(48px,7vw,86px);line-height:.92;letter-spacing:-.055em;text-transform:uppercase}
+.hero p{font-size:19px;color:#eee;max-width:590px}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:13px 20px;border:2px solid var(--gold);border-radius:6px;text-decoration:none;text-transform:uppercase;letter-spacing:.06em;font-weight:1000;cursor:pointer}
+.btn.primary{background:var(--gold);color:#050505}.btn.secondary{background:rgba(0,0,0,.42);color:#fff}
+.section{padding:76px 0}.section.alt{background:#090909}
+.heading{text-align:center;max-width:760px;margin:0 auto 38px}
+.heading h2{margin:10px 0 14px;font-size:clamp(35px,5vw,56px);line-height:1;text-transform:uppercase;letter-spacing:-.04em}
+.heading p{color:var(--muted);font-size:17px}
+.story-grid{display:grid;grid-template-columns:1fr 1fr;gap:30px;align-items:center}
+.story-copy{border:1px solid var(--line);border-radius:14px;padding:32px;background:radial-gradient(circle at 20% 0,rgba(181,133,60,.11),transparent 16rem),var(--panel)}
+.story-copy h3{font-size:30px;text-transform:uppercase}
+.story-copy p{color:var(--muted)}
+.story-image{overflow:hidden;border:1px solid var(--line);border-radius:14px;box-shadow:0 22px 55px rgba(0,0,0,.4)}
+.products{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px}
+.card{overflow:hidden;border:1px solid var(--line);border-radius:14px;background:var(--panel);display:flex;flex-direction:column;box-shadow:0 15px 35px rgba(0,0,0,.35)}
+.card-media{height:235px;overflow:hidden;background:#151515}
+.card-media img{height:100%;object-fit:cover;object-position:center}
+.card-body{padding:23px;display:flex;flex-direction:column;flex:1}
+.type{color:var(--gold2);font-size:12px;font-weight:1000;letter-spacing:.12em;text-transform:uppercase}
+.card h3{margin:6px 0 10px;font-size:24px;text-transform:uppercase;line-height:1.04}
+.card p{color:var(--muted);flex:1}
+.card-bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;border-top:1px solid #2b2b2b;padding-top:15px}
+.price{color:var(--gold2);font-size:21px;font-weight:1000}.off{opacity:.24;filter:grayscale(1)}
+.promo{margin-top:30px;border:2px solid var(--gold);border-radius:14px;padding:25px;text-align:center;background:linear-gradient(135deg,rgba(181,133,60,.17),rgba(181,133,60,.03))}
+.promo strong{display:block;font-size:clamp(28px,4vw,42px);color:var(--gold2);text-transform:uppercase;line-height:1}
+.promo p{margin:9px 0 0;color:#eee}
+.benefits{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.benefit{border:1px solid var(--line);border-radius:12px;padding:22px 16px;text-align:center;background:var(--panel)}
+.benefit b{display:block;text-transform:uppercase;letter-spacing:.06em}.benefit span{color:var(--muted);font-size:14px}
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.bottom-card{border:2px solid var(--line);border-radius:14px;padding:34px;background:radial-gradient(circle at center,rgba(181,133,60,.10),transparent 17rem),#090909}
+.bottom-card h2{margin:10px 0 14px;font-size:clamp(31px,4vw,46px);line-height:1;text-transform:uppercase}
+.bottom-card p{color:var(--muted)}
+.modal{position:fixed;inset:0;z-index:500;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(0,0,0,.88)}
+.modal.open{display:flex}.modal-panel{width:min(100%,920px);max-height:92vh;overflow:auto;border:2px solid var(--gold);border-radius:14px;background:#0a0a0a;padding:22px}
+.modal-head{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:14px}.modal-head h2{margin:0;text-transform:uppercase}.close{border:1px solid var(--gold);background:transparent;color:#fff;border-radius:7px;padding:9px 12px;font-weight:900}
+footer{border-top:1px solid var(--line);padding:27px 16px;text-align:center;color:#999;font-size:13px}
+@media(max-width:900px){.story-grid,.bottom-grid{grid-template-columns:1fr}.products{grid-template-columns:repeat(2,1fr)}.benefits{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:720px){
+  .container{width:min(calc(100% - 20px),var(--max))}
+  .nav{min-height:64px}.brand strong{font-size:14px}.brand span{display:none}.menu-btn{display:block}.desktop-cart{display:none}
+  .nav-links{position:absolute;top:64px;left:10px;right:10px;display:none;flex-direction:column;align-items:stretch;gap:0;padding:10px;border:1px solid var(--line);border-radius:12px;background:#090909}
+  .nav-links.open{display:flex}.nav-links a{padding:13px 10px;border-bottom:1px solid #252525}.nav-links a:last-child{border-bottom:0}
+  .hero{min-height:540px}.hero::after{background:linear-gradient(rgba(0,0,0,.82),rgba(0,0,0,.66))}
+  .hero-content{padding:58px 0}h1{font-size:clamp(44px,15vw,64px)}.hero p{font-size:17px}.actions{flex-direction:column}.btn{width:100%}
+  .section{padding:58px 0}.products{grid-template-columns:1fr}.card-media{height:260px}.benefits{grid-template-columns:1fr}
+  .story-copy,.bottom-card{padding:25px 21px}
+}
+</style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="container nav">
-      <a class="brand" href="#home" aria-label="Eleven Alpha Jerky home">
-        <span class="brand-mark">EA</span>
-        <span class="brand-copy">
-          <strong>Eleven Alpha Jerky</strong>
-          <span>Veteran-Owned Small Batch</span>
-        </span>
-      </a>
-
-      <button class="menu-button" id="menuButton" type="button" aria-expanded="false" aria-controls="navLinks">Menu</button>
-
-      <nav class="nav-links" id="navLinks" aria-label="Main navigation">
-        <a href="#story">Our Story</a>
-        <a href="#flavors">Flavors</a>
-        <a href="order.html">Order</a>
-        <a href="#reviews">Reviews</a>
-        <a href="#contact">Contact</a>
-      </nav>
-
-      <a class="cart-link desktop-cart" href="order.html#cart" aria-label="Open shopping cart">
-        Cart <span class="cart-count" data-cart-count>0</span>
-      </a>
-    </div>
-  </header>
-
-  <main id="home">
-    <section class="hero">
-      <div class="container hero-grid">
-        <div class="hero-copy">
-          <div class="eyebrow">Veteran-Owned • Small Batch • Bold Flavor</div>
-          <h1>Bold Flavors. Quality Jerky.</h1>
-          <p>Built through family, tradition, and years of refinement. Every batch is made to deliver the kind of flavor that keeps you reaching back into the bag.</p>
-          <div class="hero-actions">
-            <a class="button primary" href="order.html">Order Now</a>
-            <a class="button secondary" href="#flavors">View Flavors</a>
-          </div>
-        </div>
-
-        <div class="hero-art" aria-label="Bowl of handcrafted jerky illustration">
-          <div class="jerky-bowl">
-            <span class="jerky-strip"></span>
-            <span class="jerky-strip"></span>
-            <span class="jerky-strip"></span>
-            <span class="jerky-strip"></span>
-            <span class="jerky-strip"></span>
-          </div>
-          <div class="hero-seal">Made with purpose</div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="story">
-      <div class="container">
-        <div class="section-heading">
-          <div class="eyebrow">Our Story</div>
-          <h2>Made With Purpose</h2>
-          <p>What started with venison, family taste testing, and years of refining recipes became Eleven Alpha Jerky.</p>
-        </div>
-
-        <div class="story-grid">
-          <article class="story-card">
-            <h3>Built Through Family</h3>
-            <p>Our recipes were refined over years with honest feedback from the toughest taste-test team imaginable: family. Every flavor is designed to be distinctive, memorable, and worth sharing.</p>
-          </article>
-          <article class="story-card">
-            <h3>Made In Small Batches</h3>
-            <p>Small-batch production gives each run the attention it deserves. We focus on bold seasoning, dependable quality, and a finished product that represents the Eleven Alpha name.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section class="section alt" id="flavors">
-      <div class="container">
-        <div class="section-heading">
-          <div class="eyebrow">Our Flavors</div>
-          <h2>Pick Your Favorite</h2>
-          <p>Jerky is $10 per 2 oz pack. Danger Close Sticks are $10 per 3 oz pack.</p>
-        </div>
-
-        <div class="products">
-          <article class="product-card">
-            <div class="product-art"></div>
-            <div class="product-content">
-              <div class="flavor-type">Cajun Mesquite</div>
-              <h3>Lucy's Cajun Campfire</h3>
-              <p>Smoky mesquite flavor with a warm Cajun kick and a bold campfire finish.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="4 out of 5 flames">🔥🔥🔥🔥<span class="off">🔥</span></span></div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-art"></div>
-            <div class="product-content">
-              <div class="flavor-type">Hickory Cajun</div>
-              <h3>Cajun Hick</h3>
-              <p>Deep hickory smoke layered with balanced Cajun seasoning and heat.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="4 out of 5 flames">🔥🔥🔥🔥<span class="off">🔥</span></span></div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-art"></div>
-            <div class="product-content">
-              <div class="flavor-type">Applewood</div>
-              <h3>Rub the Applewood</h3>
-              <p>Smooth applewood smoke, rich seasoning, and classic jerky flavor.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="1 out of 5 flames">🔥<span class="off">🔥🔥🔥🔥</span></span></div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-art"></div>
-            <div class="product-content">
-              <div class="flavor-type">BBQ Blend</div>
-              <h3>Slap the Smoke</h3>
-              <p>Savory barbecue flavor with bold backyard smoke and a smooth finish.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="1 out of 5 flames">🔥<span class="off">🔥🔥🔥🔥</span></span></div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-art pacific"></div>
-            <div class="product-content">
-              <div class="flavor-type">Teriyaki Mesquite</div>
-              <h3>Pacific Smokeout</h3>
-              <p>Savory teriyaki sweetness layered with deep mesquite smoke and a clean finish.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="1 out of 5 flames">🔥<span class="off">🔥🔥🔥🔥</span></span></div>
-            </div>
-          </article>
-
-          <article class="product-card">
-            <div class="product-art sticks"></div>
-            <div class="product-content">
-              <div class="flavor-type">Jalapeño Cheddar Meat Sticks</div>
-              <h3>Danger Close Sticks</h3>
-              <p>Bold smoke, real cheddar flavor, and a controlled jalapeño kick.</p>
-              <div class="product-bottom"><span class="price">$10</span><span class="flames" aria-label="2 out of 5 flames">🔥🔥<span class="off">🔥🔥🔥</span></span></div>
-            </div>
-          </article>
-        </div>
-
-        <div class="promo">
-          <strong>Buy 4, Get 1 Free</strong>
-          <p>Mix and match any five products. The discount is applied automatically in your cart.</p>
-        </div>
-
-        <div style="text-align:center;margin-top:28px">
-          <a class="button primary" href="order.html">Build Your Pack</a>
-        </div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="container benefits">
-        <div class="benefit"><div class="benefit-icon">USA</div><strong>Made in USA</strong><span>Proudly made with purpose.</span></div>
-        <div class="benefit"><div class="benefit-icon">V</div><strong>Veteran Owned</strong><span>Mission-driven small business.</span></div>
-        <div class="benefit"><div class="benefit-icon">SB</div><strong>Small Batch</strong><span>Focused attention every run.</span></div>
-        <div class="benefit"><div class="benefit-icon">Q</div><strong>Quality First</strong><span>Bold flavor and dependable quality.</span></div>
-      </div>
-    </section>
-
-    <section class="section alt" id="reviews">
-      <div class="container bottom-grid">
-        <article class="bottom-card">
-          <div class="eyebrow">Customer Reviews</div>
-          <h2>What Customers Are Saying</h2>
-          <p>Read customer feedback or leave a star rating and comment about your favorite Eleven Alpha flavor.</p>
-          <div class="review-actions">
-            <button class="button secondary" type="button" data-open-modal="reviewsModal">See Reviews</button>
-            <button class="button primary" type="button" data-open-modal="surveyModal">Leave a Review</button>
-          </div>
-        </article>
-
-        <article class="bottom-card" id="contact">
-          <div class="eyebrow">Contact</div>
-          <h2>Ready to Build Your Pack?</h2>
-          <p>Choose your flavors, select pickup or shipping, and send your order directly to Eleven Alpha Jerky.</p>
-          <div class="review-actions">
-            <a class="button primary" href="order.html">Order Now</a>
-          </div>
-          <p style="margin-top:18px;color:var(--gold2);font-weight:900">elevenalphajerky@gmail.com</p>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>© 2026 Eleven Alpha Jerky • Veteran-Owned Small Batch Jerky</footer>
-
-  <div class="modal" id="reviewsModal" role="dialog" aria-modal="true" aria-labelledby="reviewsTitle">
-    <div class="modal-panel">
-      <div class="modal-head">
-        <h2 id="reviewsTitle">Customer Reviews</h2>
-        <button class="close-button" type="button" data-close-modal>Close</button>
-      </div>
-      <div id="trustmary-display-widget"></div>
-      <script src="https://widget.trustmary.com/veYxHgPpE"></script>
+<header class="header">
+  <div class="container nav">
+    <a class="brand" href="#home"><span class="brand-badge">EA</span><span><strong>Eleven Alpha Jerky</strong><span>Veteran-Owned Small Batch</span></span></a>
+    <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false">Menu</button>
+    <nav class="nav-links" id="navLinks">
+      <a href="#story">Our Story</a><a href="#flavors">Flavors</a><a href="order.html">Order</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
+    </nav>
+    <a class="cart-link desktop-cart" href="order.html#cart">Cart <span class="cart-count" data-cart-count>0</span></a>
+  </div>
+</header>
+<main id="home">
+<section class="hero">
+  <div class="container hero-content">
+    <div class="eyebrow">Bold Flavors • Quality Jerky</div>
+    <h1>Made With Purpose.</h1>
+    <p>Veteran-owned small batch jerky built through family, tradition, and years of refinement.</p>
+    <div class="actions"><a class="btn primary" href="order.html">Order Now</a><a class="btn secondary" href="#flavors">View Flavors</a></div>
+  </div>
+</section>
+<section class="section" id="story">
+  <div class="container">
+    <div class="heading"><div class="eyebrow">Our Story</div><h2>Built Through Family, Tradition, and Years of Refinement.</h2></div>
+    <div class="story-grid">
+      <div class="story-copy"><h3>More Than a Snack</h3><p>Eleven Alpha Jerky started with venison, family taste testing, and years of refining recipes. Every batch represents consistency, hard work, and pride in the finished product.</p><p>Small-batch production lets us focus on bold seasoning, dependable quality, and flavors that stand on their own.</p></div>
+      <div class="story-image"><img src="assets/story.jpg" alt="Jerky with peppers, garlic, and spices"></div>
     </div>
   </div>
-
-  <div class="modal" id="surveyModal" role="dialog" aria-modal="true" aria-labelledby="surveyTitle">
-    <div class="modal-panel">
-      <div class="modal-head">
-        <h2 id="surveyTitle">Leave a Review</h2>
-        <button class="close-button" type="button" data-close-modal>Close</button>
-      </div>
-      <div id="trustmary-survey-widget"></div>
-      <script src="https://widget.trustmary.com/pdEJpoOF9s"></script>
+</section>
+<section class="section alt" id="flavors">
+  <div class="container">
+    <div class="heading"><div class="eyebrow">Our Flavors</div><h2>Pick Your Favorite</h2><p>Jerky is $10 per 2 oz pack. Danger Close Sticks are $10 per 3 oz pack.</p></div>
+    <div class="products">
+      <article class="card"><div class="card-media"><img src="assets/lucys.jpg" alt="Lucy's Cajun Campfire jerky"></div><div class="card-body"><div class="type">Cajun Mesquite</div><h3>Lucy's Cajun Campfire</h3><p>Smoky mesquite flavor with a warm Cajun kick and bold campfire finish.</p><div class="card-bottom"><span class="price">$10</span><span>🔥🔥🔥🔥<span class="off">🔥</span></span></div></div></article>
+      <article class="card"><div class="card-media"><img src="assets/cajun-hick.jpg" alt="Cajun Hick jerky"></div><div class="card-body"><div class="type">Hickory Cajun</div><h3>Cajun Hick</h3><p>Deep hickory smoke layered with balanced Cajun seasoning and heat.</p><div class="card-bottom"><span class="price">$10</span><span>🔥🔥🔥🔥<span class="off">🔥</span></span></div></div></article>
+      <article class="card"><div class="card-media"><img src="assets/applewood.jpg" alt="Rub the Applewood jerky"></div><div class="card-body"><div class="type">Applewood</div><h3>Rub the Applewood</h3><p>Smooth applewood smoke, rich seasoning, and classic jerky flavor.</p><div class="card-bottom"><span class="price">$10</span><span>🔥<span class="off">🔥🔥🔥🔥</span></span></div></div></article>
+      <article class="card"><div class="card-media"><img src="assets/slap-smoke.jpg" alt="Slap the Smoke jerky"></div><div class="card-body"><div class="type">BBQ Blend</div><h3>Slap the Smoke</h3><p>Savory barbecue flavor with bold backyard smoke and a smooth finish.</p><div class="card-bottom"><span class="price">$10</span><span>🔥<span class="off">🔥🔥🔥🔥</span></span></div></div></article>
+      <article class="card"><div class="card-media"><img src="assets/pacific.jpg" alt="Pacific Smokeout teriyaki mesquite jerky"></div><div class="card-body"><div class="type">Teriyaki Mesquite</div><h3>Pacific Smokeout</h3><p>Savory teriyaki sweetness layered with deep mesquite smoke.</p><div class="card-bottom"><span class="price">$10</span><span>🔥<span class="off">🔥🔥🔥🔥</span></span></div></div></article>
+      <article class="card"><div class="card-media"><img src="assets/danger-close.jpg" alt="Danger Close jalapeno cheddar meat sticks"></div><div class="card-body"><div class="type">Jalapeño Cheddar Meat Sticks</div><h3>Danger Close Sticks</h3><p>Bold smoke, real cheddar flavor, and a controlled jalapeño kick.</p><div class="card-bottom"><span class="price">$10</span><span>🔥🔥<span class="off">🔥🔥🔥</span></span></div></div></article>
     </div>
+    <div class="promo"><strong>Buy 4, Get 1 Free</strong><p>Mix and match any five products. The discount is applied automatically in your cart.</p></div>
+    <div style="text-align:center;margin-top:26px"><a class="btn primary" href="order.html">Build Your Pack</a></div>
   </div>
-
-  <script>
-    const CART_STORAGE_KEY = "elevenAlphaCart";
-
-    function readCart() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "[]");
-        return Array.isArray(saved) ? saved : [];
-      } catch (error) {
-        return [];
-      }
-    }
-
-    function updateCartCount() {
-      const count = readCart().reduce((sum, item) => {
-        const qty = Number(item && item.qty);
-        return sum + (Number.isFinite(qty) && qty > 0 ? qty : 0);
-      }, 0);
-
-      document.querySelectorAll("[data-cart-count]").forEach(element => {
-        element.textContent = count > 99 ? "99+" : String(count);
-      });
-    }
-
-    const menuButton = document.getElementById("menuButton");
-    const navLinks = document.getElementById("navLinks");
-
-    menuButton.addEventListener("click", () => {
-      const open = navLinks.classList.toggle("open");
-      menuButton.setAttribute("aria-expanded", String(open));
-    });
-
-    navLinks.querySelectorAll("a").forEach(link => {
-      link.addEventListener("click", () => {
-        navLinks.classList.remove("open");
-        menuButton.setAttribute("aria-expanded", "false");
-      });
-    });
-
-    function closeModals() {
-      document.querySelectorAll(".modal.open").forEach(modal => modal.classList.remove("open"));
-      document.body.style.overflow = "";
-    }
-
-    document.querySelectorAll("[data-open-modal]").forEach(button => {
-      button.addEventListener("click", () => {
-        const modal = document.getElementById(button.dataset.openModal);
-        if (!modal) return;
-        modal.classList.add("open");
-        document.body.style.overflow = "hidden";
-      });
-    });
-
-    document.querySelectorAll("[data-close-modal]").forEach(button => {
-      button.addEventListener("click", closeModals);
-    });
-
-    document.querySelectorAll(".modal").forEach(modal => {
-      modal.addEventListener("click", event => {
-        if (event.target === modal) closeModals();
-      });
-    });
-
-    document.addEventListener("keydown", event => {
-      if (event.key === "Escape") closeModals();
-    });
-
-    updateCartCount();
-    window.addEventListener("pageshow", updateCartCount);
-    window.addEventListener("storage", updateCartCount);
-    document.addEventListener("visibilitychange", () => {
-      if (!document.hidden) updateCartCount();
-    });
-  </script>
+</section>
+<section class="section">
+  <div class="container benefits">
+    <div class="benefit"><b>Veteran Owned</b><span>Mission-driven small business.</span></div>
+    <div class="benefit"><b>Small Batch</b><span>Focused attention every run.</span></div>
+    <div class="benefit"><b>Quality Ingredients</b><span>Bold flavor. No shortcuts.</span></div>
+    <div class="benefit"><b>Pickup or Shipping</b><span>Chicago, West Michigan, or shipped.</span></div>
+  </div>
+</section>
+<section class="section alt" id="reviews">
+  <div class="container bottom-grid">
+    <article class="bottom-card"><div class="eyebrow">Customer Reviews</div><h2>What Customers Are Saying</h2><p>Read verified feedback or leave a star rating and comment.</p><div class="actions"><button class="btn secondary" type="button" data-open="reviewsModal">See Reviews</button><button class="btn primary" type="button" data-open="surveyModal">Leave a Review</button></div></article>
+    <article class="bottom-card" id="contact"><div class="eyebrow">Contact</div><h2>Ready to Build Your Pack?</h2><p>Choose your flavors, select pickup or shipping, and send your order directly to Eleven Alpha Jerky.</p><div class="actions"><a class="btn primary" href="order.html">Order Now</a></div><p style="margin-top:17px;color:var(--gold2);font-weight:900">elevenalphajerky@gmail.com</p></article>
+  </div>
+</section>
+</main>
+<footer>© 2026 Eleven Alpha Jerky • Veteran-Owned Small Batch Jerky</footer>
+<div class="modal" id="reviewsModal"><div class="modal-panel"><div class="modal-head"><h2>Customer Reviews</h2><button class="close" data-close type="button">Close</button></div><script src="https://widget.trustmary.com/veYxHgPpE"></script></div></div>
+<div class="modal" id="surveyModal"><div class="modal-panel"><div class="modal-head"><h2>Leave a Review</h2><button class="close" data-close type="button">Close</button></div><script src="https://widget.trustmary.com/pdEJpoOF9s"></script></div></div>
+<script>
+const KEY="elevenAlphaCart";
+function cart(){try{const c=JSON.parse(localStorage.getItem(KEY)||"[]");return Array.isArray(c)?c:[]}catch(e){return[]}}
+function updateCart(){const n=cart().reduce((s,i)=>s+(Number(i.qty)||0),0);document.querySelectorAll("[data-cart-count]").forEach(el=>el.textContent=n>99?"99+":String(n))}
+const menuBtn=document.getElementById("menuBtn"),navLinks=document.getElementById("navLinks");
+menuBtn.addEventListener("click",()=>{const open=navLinks.classList.toggle("open");menuBtn.setAttribute("aria-expanded",String(open))});
+navLinks.querySelectorAll("a").forEach(a=>a.addEventListener("click",()=>navLinks.classList.remove("open")));
+function closeModals(){document.querySelectorAll(".modal.open").forEach(m=>m.classList.remove("open"));document.body.style.overflow=""}
+document.querySelectorAll("[data-open]").forEach(b=>b.addEventListener("click",()=>{document.getElementById(b.dataset.open).classList.add("open");document.body.style.overflow="hidden"}));
+document.querySelectorAll("[data-close]").forEach(b=>b.addEventListener("click",closeModals));
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModals()}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModals()});
+updateCart();window.addEventListener("pageshow",updateCart);window.addEventListener("storage",updateCart);document.addEventListener("visibilitychange",()=>{if(!document.hidden)updateCart()});
+</script>
 </body>
 </html>
