@@ -72,21 +72,26 @@
       letter-spacing:.08em;
       text-transform:uppercase;
     }
-    .review-display {
-      width:100%;
-      min-height:42px;
-      margin:0 0 7px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
+    .review-stars {
+      margin:1px 0 7px;
+      color:#d7a13f;
+      font-size:clamp(16px,2vw,24px);
+      line-height:1;
+      letter-spacing:.04em;
+      white-space:nowrap;
     }
-    .review-display > * { max-width:100%; }
     .reviews-panel p {
       margin:0 0 9px;
       color:#ddd;
       font-size:clamp(8px,.84vw,11px);
       line-height:1.28;
+    }
+    .review-actions {
+      width:100%;
+      display:flex;
+      flex-direction:column;
+      gap:6px;
+      align-items:center;
     }
     .review-button {
       appearance:none;
@@ -101,6 +106,12 @@
       cursor:pointer;
     }
     .review-button:hover { background:#d9a854; }
+    .review-button.secondary {
+      border:1px solid rgba(181,133,60,.9);
+      background:#111;
+      color:#d7a13f;
+    }
+    .review-button.secondary:hover { background:#1a1a1a; color:#f0bd58; }
 
     /* Full-size Trustmary popup */
     .review-modal {
@@ -169,8 +180,9 @@
         padding:22px 16px;
       }
       .reviews-panel h2 { font-size:20px; }
-      .review-display { min-height:54px; }
+      .review-stars { font-size:25px; }
       .reviews-panel p { font-size:13px; }
+      .review-actions { flex-direction:row; justify-content:center; flex-wrap:wrap; }
       .review-button { font-size:12px; padding:11px 17px; }
       .review-dialog { padding:44px 12px 18px; }
       .review-dialog h2 { font-size:20px; }
@@ -189,11 +201,22 @@
 
     <section class="reviews-panel" aria-label="Customer reviews">
       <h2>Customer Reviews</h2>
-      <div class="review-display" id="trustmary-display" aria-label="Live customer review rating">
-        <script src="https://widget.trustmary.com/veYxHgPpE"></script>
+      <div class="review-stars" aria-hidden="true">★★★★★</div>
+      <p>Read verified customer feedback or share your Eleven Alpha experience.</p>
+      <div class="review-actions">
+        <button class="review-button secondary" id="open-reviews" type="button">See Reviews</button>
+        <button class="review-button" id="open-review" type="button">Leave a Review</button>
       </div>
-      <button class="review-button" id="open-review" type="button">Leave a Review</button>
     </section>
+
+    <div class="review-modal" id="reviews-modal" role="dialog" aria-modal="true" aria-labelledby="reviews-title" aria-hidden="true">
+      <div class="review-dialog">
+        <button class="review-close" id="close-reviews" type="button" aria-label="Close customer reviews">×</button>
+        <h2 id="reviews-title">Customer Reviews</h2>
+        <p>See what customers are saying about Eleven Alpha Jerky.</p>
+        <div class="reviews-widget" id="trustmary-display-widget"></div>
+      </div>
+    </div>
 
     <div class="review-modal" id="review-modal" role="dialog" aria-modal="true" aria-labelledby="review-title" aria-hidden="true">
       <div class="review-dialog">
@@ -225,43 +248,71 @@
 
   <script>
     (() => {
-      const modal = document.getElementById('review-modal');
-      const openButton = document.getElementById('open-review');
-      const closeButton = document.getElementById('close-review');
-      const widget = document.getElementById('trustmary-widget');
-      let widgetLoaded = false;
+      const reviewModal = document.getElementById('review-modal');
+      const reviewsModal = document.getElementById('reviews-modal');
+      const openReviewButton = document.getElementById('open-review');
+      const openReviewsButton = document.getElementById('open-reviews');
+      const closeReviewButton = document.getElementById('close-review');
+      const closeReviewsButton = document.getElementById('close-reviews');
+      const reviewWidget = document.getElementById('trustmary-widget');
+      const displayWidget = document.getElementById('trustmary-display-widget');
+      let reviewWidgetLoaded = false;
+      let displayWidgetLoaded = false;
 
-      function loadWidget() {
-        if (widgetLoaded) return;
+      function loadScript(container, src) {
         const script = document.createElement('script');
-        script.src = 'https://widget.trustmary.com/pdEJpoOF9s';
+        script.src = src;
         script.async = true;
-        widget.appendChild(script);
-        widgetLoaded = true;
+        container.appendChild(script);
       }
 
-      function openModal() {
-        loadWidget();
+      function openModal(modal, closeButton) {
         modal.classList.add('is-open');
         modal.setAttribute('aria-hidden', 'false');
         document.body.classList.add('modal-open');
         closeButton.focus();
       }
 
-      function closeModal() {
+      function closeModal(modal, returnButton) {
         modal.classList.remove('is-open');
         modal.setAttribute('aria-hidden', 'true');
-        document.body.classList.remove('modal-open');
-        openButton.focus();
+        if (!document.querySelector('.review-modal.is-open')) {
+          document.body.classList.remove('modal-open');
+        }
+        returnButton.focus();
       }
 
-      openButton.addEventListener('click', openModal);
-      closeButton.addEventListener('click', closeModal);
-      modal.addEventListener('click', (event) => {
-        if (event.target === modal) closeModal();
+      openReviewsButton.addEventListener('click', () => {
+        if (!displayWidgetLoaded) {
+          loadScript(displayWidget, 'https://widget.trustmary.com/veYxHgPpE');
+          displayWidgetLoaded = true;
+        }
+        openModal(reviewsModal, closeReviewsButton);
       });
+
+      openReviewButton.addEventListener('click', () => {
+        if (!reviewWidgetLoaded) {
+          loadScript(reviewWidget, 'https://widget.trustmary.com/pdEJpoOF9s');
+          reviewWidgetLoaded = true;
+        }
+        openModal(reviewModal, closeReviewButton);
+      });
+
+      closeReviewsButton.addEventListener('click', () => closeModal(reviewsModal, openReviewsButton));
+      closeReviewButton.addEventListener('click', () => closeModal(reviewModal, openReviewButton));
+
+      [reviewsModal, reviewModal].forEach((modal) => {
+        modal.addEventListener('click', (event) => {
+          if (event.target !== modal) return;
+          if (modal === reviewsModal) closeModal(reviewsModal, openReviewsButton);
+          else closeModal(reviewModal, openReviewButton);
+        });
+      });
+
       document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('is-open')) closeModal();
+        if (event.key !== 'Escape') return;
+        if (reviewsModal.classList.contains('is-open')) closeModal(reviewsModal, openReviewsButton);
+        if (reviewModal.classList.contains('is-open')) closeModal(reviewModal, openReviewButton);
       });
     })();
   </script>
