@@ -22,6 +22,19 @@
     .contact-link { left:79.0%; top:1.1%; width:8.5%; height:2.4%; }
 
 
+
+    /* Covers the original static cart zero baked into the homepage artwork */
+    .cart-static-zero-mask {
+      position:absolute;
+      left:65.15%;
+      top:1.67%;
+      width:2.35%;
+      height:1.65%;
+      z-index:16;
+      background:#050505;
+      pointer-events:none;
+    }
+
     /* Active cart button and item count */
     .cart-link {
       left:91.4%;
@@ -33,7 +46,7 @@
     }
     .cart-count {
       position:absolute;
-      right:-2px;
+      right:8px;
       top:-4px;
       min-width:20px;
       height:20px;
@@ -264,7 +277,8 @@
     <a class="click-zone shop-link" href="order.html" aria-label="Shop"></a>
     <a class="click-zone contact-link" href="#contact" aria-label="Contact"></a>
 
-    <a class="click-zone cart-link" href="order.html#cart" aria-label="Open shopping cart">
+        <span class="cart-static-zero-mask" aria-hidden="true"></span>
+<a class="click-zone cart-link" href="order.html#cart" aria-label="Open shopping cart">
       <span class="cart-count" id="cart-count" hidden>0</span>
     </a>
 
