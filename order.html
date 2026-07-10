@@ -28,10 +28,13 @@ input{padding:8px;margin:5px 0}
 .fulfillment-options{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px}
 .fulfillment-options label{display:flex;align-items:center;gap:8px;font-weight:bold;cursor:pointer}
 .fulfillment-options input{margin:0}
-.shipping-fields{display:none;margin-top:12px}
-.shipping-fields.active{display:block}
-.shipping-fields input{width:min(100%,420px)}
-.shipping-note{color:#bbb;font-size:13px;margin-top:8px}
+.fulfillment-details{display:none;margin-top:12px}
+.fulfillment-details.active{display:block}
+.fulfillment-details input[type="text"]{width:min(100%,420px)}
+.pickup-options{display:flex;flex-direction:column;gap:10px;margin-top:8px}
+.pickup-options label{display:flex;align-items:center;gap:8px;cursor:pointer}
+.pickup-options input{margin:0}
+.shipping-note,.pickup-note{color:#bbb;font-size:13px;margin-top:8px}
 
 </style>
 </head>
@@ -96,12 +99,35 @@ input{padding:8px;margin:5px 0}
 
 <div class="fulfillment">
   <h3>Pickup or Shipping</h3>
+
   <div class="fulfillment-options">
-    <label><input type="radio" name="fulfillment" value="Pickup" onchange="toggleShippingFields()"> Pickup</label>
-    <label><input type="radio" name="fulfillment" value="Shipping" onchange="toggleShippingFields()"> Need Shipping</label>
+    <label>
+      <input type="radio" name="fulfillment" value="Pickup" onchange="toggleFulfillmentDetails()">
+      Pickup
+    </label>
+    <label>
+      <input type="radio" name="fulfillment" value="Shipping" onchange="toggleFulfillmentDetails()">
+      Need Shipping
+    </label>
   </div>
 
-  <div class="shipping-fields" id="shippingFields">
+  <div class="fulfillment-details" id="pickupFields">
+    <strong>Select Pickup Area</strong>
+    <div class="pickup-options">
+      <label>
+        <input type="radio" name="pickupLocation" value="Chicago">
+        Chicago
+      </label>
+      <label>
+        <input type="radio" name="pickupLocation" value="Kent City / Grand Rapids Area">
+        Kent City / Grand Rapids Area
+      </label>
+    </div>
+    <div class="pickup-note">Pickup details and timing will be confirmed after the order is received.</div>
+  </div>
+
+  <div class="fulfillment-details" id="shippingFields">
+    <strong>Shipping Address</strong><br>
     <input type="text" id="address1" placeholder="Street Address"><br>
     <input type="text" id="address2" placeholder="Apartment, Suite, Unit (optional)"><br>
     <input type="text" id="city" placeholder="City"><br>
@@ -206,11 +232,22 @@ function renderCart() {
 }
 
 
-function toggleShippingFields() {
+function toggleFulfillmentDetails() {
   const selected = document.querySelector('input[name="fulfillment"]:checked');
-  const fields = document.getElementById("shippingFields");
-  if (!fields) return;
-  fields.classList.toggle("active", selected && selected.value === "Shipping");
+  const pickupFields = document.getElementById("pickupFields");
+  const shippingFields = document.getElementById("shippingFields");
+
+  const isPickup = selected && selected.value === "Pickup";
+  const isShipping = selected && selected.value === "Shipping";
+
+  pickupFields.classList.toggle("active", Boolean(isPickup));
+  shippingFields.classList.toggle("active", Boolean(isShipping));
+
+  if (!isPickup) {
+    document.querySelectorAll('input[name="pickupLocation"]').forEach(input => {
+      input.checked = false;
+    });
+  }
 }
 
 function sendOrder() {
@@ -225,7 +262,19 @@ function sendOrder() {
   }
 
   const fulfillment = fulfillmentChoice.value;
-  let shippingAddress = "";
+  let fulfillmentDetails = "";
+
+  if (fulfillment === "Pickup") {
+    const pickupChoice = document.querySelector('input[name="pickupLocation"]:checked');
+
+    if (!pickupChoice) {
+      alert("Please select either Chicago or Kent City / Grand Rapids Area for pickup.");
+      return;
+    }
+
+    fulfillmentDetails = `
+Pickup area: ${pickupChoice.value}`;
+  }
 
   if (fulfillment === "Shipping") {
     const address1 = document.getElementById("address1").value.trim();
@@ -239,8 +288,10 @@ function sendOrder() {
       return;
     }
 
-    shippingAddress =
-`${address1}${address2 ? "
+    fulfillmentDetails =
+`
+Shipping address:
+${address1}${address2 ? "
 " + address2 : ""}
 ${city}, ${state} ${zip}`;
   }
@@ -257,10 +308,7 @@ Phone: ${phone}
 Email: ${email}
 
 FULFILLMENT:
-${fulfillment}${fulfillment === "Shipping" ? "
-
-SHIPPING ADDRESS:
-" + shippingAddress : ""}
+${fulfillment}${fulfillmentDetails}
 
 ORDER:
 
