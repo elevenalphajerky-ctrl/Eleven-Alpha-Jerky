@@ -22,6 +22,17 @@ input{padding:8px;margin:5px 0}
 .remove-button{background:#444;color:#fff}
 @media(max-width:600px){body{padding:14px}.container{padding:18px}.cart-item{align-items:flex-start;flex-direction:column}}
 
+
+.fulfillment{margin:18px 0;padding:18px;background:#191919;border:1px solid #444;border-radius:8px}
+.fulfillment h3{margin:0 0 12px;color:#b5853c}
+.fulfillment-options{display:flex;gap:20px;flex-wrap:wrap;margin-bottom:12px}
+.fulfillment-options label{display:flex;align-items:center;gap:8px;font-weight:bold;cursor:pointer}
+.fulfillment-options input{margin:0}
+.shipping-fields{display:none;margin-top:12px}
+.shipping-fields.active{display:block}
+.shipping-fields input{width:min(100%,420px)}
+.shipping-note{color:#bbb;font-size:13px;margin-top:8px}
+
 </style>
 </head>
 <body>
@@ -81,7 +92,25 @@ input{padding:8px;margin:5px 0}
 
 <input type="text" id="name" placeholder="Full Name"><br>
 <input type="text" id="phone" placeholder="Phone Number"><br>
-<input type="email" id="email" placeholder="Email Address"><br><br>
+<input type="email" id="email" placeholder="Email Address"><br>
+
+<div class="fulfillment">
+  <h3>Pickup or Shipping</h3>
+  <div class="fulfillment-options">
+    <label><input type="radio" name="fulfillment" value="Pickup" onchange="toggleShippingFields()"> Pickup</label>
+    <label><input type="radio" name="fulfillment" value="Shipping" onchange="toggleShippingFields()"> Need Shipping</label>
+  </div>
+
+  <div class="shipping-fields" id="shippingFields">
+    <input type="text" id="address1" placeholder="Street Address"><br>
+    <input type="text" id="address2" placeholder="Apartment, Suite, Unit (optional)"><br>
+    <input type="text" id="city" placeholder="City"><br>
+    <input type="text" id="state" placeholder="State"><br>
+    <input type="text" id="zip" placeholder="ZIP Code"><br>
+    <div class="shipping-note">Shipping cost will be confirmed before the order is finalized.</div>
+  </div>
+</div>
+<br>
 
 <div id="cartItems">No items added yet.</div>
 
@@ -176,17 +205,48 @@ function renderCart() {
   document.getElementById("total").textContent = `Total: $${total}`;
 }
 
+
+function toggleShippingFields() {
+  const selected = document.querySelector('input[name="fulfillment"]:checked');
+  const fields = document.getElementById("shippingFields");
+  if (!fields) return;
+  fields.classList.toggle("active", selected && selected.value === "Shipping");
+}
+
 function sendOrder() {
   const name = document.getElementById("name").value.trim();
   const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("email").value.trim();
+  const fulfillmentChoice = document.querySelector('input[name="fulfillment"]:checked');
 
-  if (!name || !phone || !email || cart.length === 0) {
-    alert("Please complete customer info and cart.");
+  if (!name || !phone || !email || !fulfillmentChoice || cart.length === 0) {
+    alert("Please complete customer info, select Pickup or Shipping, and add items to the cart.");
     return;
   }
 
-  const items = cart.map(item => `- ${item.name} x${item.qty}`).join("\n");
+  const fulfillment = fulfillmentChoice.value;
+  let shippingAddress = "";
+
+  if (fulfillment === "Shipping") {
+    const address1 = document.getElementById("address1").value.trim();
+    const address2 = document.getElementById("address2").value.trim();
+    const city = document.getElementById("city").value.trim();
+    const state = document.getElementById("state").value.trim();
+    const zip = document.getElementById("zip").value.trim();
+
+    if (!address1 || !city || !state || !zip) {
+      alert("Please complete the required shipping address fields.");
+      return;
+    }
+
+    shippingAddress =
+`${address1}${address2 ? "
+" + address2 : ""}
+${city}, ${state} ${zip}`;
+  }
+
+  const items = cart.map(item => `- ${item.name} x${item.qty}`).join("
+");
   const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
   const subject = encodeURIComponent("Eleven Alpha Jerky Order");
   const body = encodeURIComponent(
@@ -196,11 +256,18 @@ Name: ${name}
 Phone: ${phone}
 Email: ${email}
 
+FULFILLMENT:
+${fulfillment}${fulfillment === "Shipping" ? "
+
+SHIPPING ADDRESS:
+" + shippingAddress : ""}
+
 ORDER:
 
 ${items}
 
-TOTAL: $${total}`
+PRODUCT TOTAL: $${total}${fulfillment === "Shipping" ? "
+Shipping cost: To be confirmed" : ""}`
   );
 
   window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
