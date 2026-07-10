@@ -21,6 +21,37 @@
     .shop-link { left:28.0%; top:1.1%; width:6.5%; height:2.4%; }
     .contact-link { left:79.0%; top:1.1%; width:8.5%; height:2.4%; }
 
+
+    /* Active cart button and item count */
+    .cart-link {
+      left:91.4%;
+      top:.75%;
+      width:6.4%;
+      height:3.2%;
+      z-index:18;
+      cursor:pointer;
+    }
+    .cart-count {
+      position:absolute;
+      right:-2px;
+      top:-4px;
+      min-width:20px;
+      height:20px;
+      padding:0 5px;
+      border-radius:999px;
+      background:#b5853c;
+      color:#050505;
+      border:2px solid #050505;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:11px;
+      line-height:1;
+      font-weight:900;
+      box-shadow:0 2px 7px rgba(0,0,0,.55);
+    }
+    .cart-count[hidden] { display:none; }
+
     /* Hero buttons */
     .view-flavors-link { left:5.9%; top:25.7%; width:14.1%; height:2.7%; }
     .hero-order-link { left:20.8%; top:25.7%; width:12.4%; height:2.7%; }
@@ -233,6 +264,11 @@
     <a class="click-zone shop-link" href="order.html" aria-label="Shop"></a>
     <a class="click-zone contact-link" href="#contact" aria-label="Contact"></a>
 
+    <a class="click-zone cart-link" href="order.html#cart" aria-label="Open shopping cart">
+      <span class="cart-count" id="cart-count" hidden>0</span>
+    </a>
+
+
     <a class="click-zone view-flavors-link" href="#flavors" aria-label="View Flavors"></a>
     <a class="click-zone hero-order-link" href="order.html" aria-label="Order Now"></a>
 
@@ -316,5 +352,40 @@
       });
     })();
   </script>
+
+  <script>
+    (function () {
+      const countEl = document.getElementById("cart-count");
+
+      function readCart() {
+        try {
+          const saved = JSON.parse(localStorage.getItem("elevenAlphaCart") || "[]");
+          return Array.isArray(saved) ? saved : [];
+        } catch (error) {
+          return [];
+        }
+      }
+
+      function updateCartCount() {
+        if (!countEl) return;
+        const count = readCart().reduce((sum, item) => {
+          const qty = Number(item && item.qty);
+          return sum + (Number.isFinite(qty) && qty > 0 ? qty : 0);
+        }, 0);
+
+        countEl.textContent = count > 99 ? "99+" : String(count);
+        countEl.hidden = count === 0;
+        countEl.setAttribute("aria-label", `${count} item${count === 1 ? "" : "s"} in cart`);
+      }
+
+      updateCartCount();
+      window.addEventListener("pageshow", updateCartCount);
+      window.addEventListener("storage", updateCartCount);
+      document.addEventListener("visibilitychange", function () {
+        if (!document.hidden) updateCartCount();
+      });
+    })();
+  </script>
+
 </body>
 </html>

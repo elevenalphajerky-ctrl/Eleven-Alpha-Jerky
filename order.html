@@ -5,16 +5,31 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Eleven Alpha Jerky</title>
 <style>
-body{font-family:Arial,sans-serif;background:#111;color:#fff;padding:30px}
+body{font-family:Arial,sans-serif;background:#111;color:#fff;padding:30px;margin:0}
 .container{max-width:900px;margin:auto;background:#1c1c1c;padding:30px;border-radius:12px}
 .flavor{border-bottom:1px solid #444;padding:15px 0}
 button{background:#b5853c;border:none;padding:10px 16px;cursor:pointer;font-weight:bold}
 input{padding:8px;margin:5px 0}
 #cart{margin-top:30px;background:#222;padding:20px}
+
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.home-button{display:inline-flex;align-items:center;gap:8px;background:transparent;color:#fff;border:1px solid #b5853c;padding:10px 16px;text-decoration:none;font-weight:bold;border-radius:4px}
+.home-button:hover{background:#b5853c;color:#111}
+.cart-summary{color:#b5853c;font-weight:bold}
+.cart-item{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #444;padding:9px 0}
+.cart-item-controls{display:flex;align-items:center;gap:7px}
+.cart-item-controls button{padding:5px 9px}
+.remove-button{background:#444;color:#fff}
+@media(max-width:600px){body{padding:14px}.container{padding:18px}.cart-item{align-items:flex-start;flex-direction:column}}
+
 </style>
 </head>
 <body>
 <div class="container">
+<div class="topbar">
+<a class="home-button" href="index.html" aria-label="Return to Eleven Alpha Jerky homepage">← Return to Home</a>
+<div class="cart-summary" id="cartSummary">0 items in cart</div>
+</div>
 <h1>Order Eleven Alpha Jerky</h1>
 
 <div class="flavor">
@@ -77,62 +92,101 @@ input{padding:8px;margin:5px 0}
 </div>
 
 <script>
-const ORDER_EMAIL="elevenalphajerky@gmail.com";
-const PRICE=10;
-let cart=[];
+const ORDER_EMAIL = "elevenalphajerky@gmail.com";
+const PRICE = 10;
+const CART_STORAGE_KEY = "elevenAlphaCart";
 
-function addItem(name,id){
- let qty=parseInt(document.getElementById(id).value);
- let existing=cart.find(x=>x.name===name);
-
- if(existing){
-  existing.qty+=qty;
- } else {
-  cart.push({name:name,qty:qty});
- }
-
- renderCart();
+function loadCart() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(CART_STORAGE_KEY) || "[]");
+    return Array.isArray(saved) ? saved.filter(item => item && item.name && Number(item.qty) > 0) : [];
+  } catch (error) {
+    return [];
+  }
 }
 
-function renderCart(){
- let html="";
+let cart = loadCart();
 
- if(cart.length===0){
-  html="No items added yet.";
- } else {
-  cart.forEach(item=>{
-   html+=`<p>${item.qty}x ${item.name} - $${item.qty*PRICE}</p>`;
-  });
- }
-
- document.getElementById("cartItems").innerHTML=html;
-
- let total=cart.reduce((sum,item)=>sum+(item.qty*PRICE),0);
-
- document.getElementById("total").innerHTML="Total: $"+total;
+function saveCart() {
+  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
 }
 
-function sendOrder(){
- let name=document.getElementById("name").value;
- let phone=document.getElementById("phone").value;
- let email=document.getElementById("email").value;
+function addItem(name, id) {
+  const input = document.getElementById(id);
+  const qty = Math.max(1, parseInt(input.value, 10) || 1);
+  const existing = cart.find(item => item.name === name);
 
- if(!name||!phone||!email||cart.length===0){
-  alert("Please complete customer info and cart.");
-  return;
- }
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ name, qty });
+  }
 
- let items="";
+  saveCart();
+  renderCart();
+  input.value = 1;
+}
 
- cart.forEach(item=>{
-  items+=`- ${item.name} x${item.qty}\n`;
- });
+function changeQty(name, change) {
+  const item = cart.find(entry => entry.name === name);
+  if (!item) return;
 
- let total=cart.reduce((sum,item)=>sum+(item.qty*PRICE),0);
+  item.qty += change;
+  if (item.qty <= 0) {
+    cart = cart.filter(entry => entry.name !== name);
+  }
 
- let subject=encodeURIComponent("Eleven Alpha Jerky Order");
+  saveCart();
+  renderCart();
+}
 
- let body=encodeURIComponent(
+function removeItem(name) {
+  cart = cart.filter(item => item.name !== name);
+  saveCart();
+  renderCart();
+}
+
+function renderCart() {
+  const cartItems = document.getElementById("cartItems");
+  const cartSummary = document.getElementById("cartSummary");
+  const itemCount = cart.reduce((sum, item) => sum + item.qty, 0);
+
+  cartSummary.textContent = `${itemCount} item${itemCount === 1 ? "" : "s"} in cart`;
+
+  if (cart.length === 0) {
+    cartItems.textContent = "No items added yet.";
+  } else {
+    cartItems.innerHTML = cart.map(item => `
+      <div class="cart-item">
+        <div><strong>${item.qty}x ${item.name}</strong> — $${item.qty * PRICE}</div>
+        <div class="cart-item-controls">
+          <button type="button" onclick='changeQty(${JSON.stringify(item.name)}, -1)' aria-label="Decrease ${item.name} quantity">−</button>
+          <button type="button" onclick='changeQty(${JSON.stringify(item.name)}, 1)' aria-label="Increase ${item.name} quantity">+</button>
+          <button type="button" class="remove-button" onclick='removeItem(${JSON.stringify(item.name)})'>Remove</button>
+        </div>
+      </div>
+    `).join("");
+  }
+
+  const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
+  document.getElementById("total").textContent = `Total: $${total}`;
+}
+
+function sendOrder() {
+  const name = document.getElementById("name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
+  const email = document.getElementById("email").value.trim();
+
+  if (!name || !phone || !email || cart.length === 0) {
+    alert("Please complete customer info and cart.");
+    return;
+  }
+
+  const items = cart.map(item => `- ${item.name} x${item.qty}`).join("
+");
+  const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
+  const subject = encodeURIComponent("Eleven Alpha Jerky Order");
+  const body = encodeURIComponent(
 `CUSTOMER INFORMATION
 
 Name: ${name}
@@ -143,9 +197,18 @@ ORDER:
 
 ${items}
 
-TOTAL: $${total}`);
+TOTAL: $${total}`
+  );
 
- window.location.href=`mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+  window.location.href = `mailto:${ORDER_EMAIL}?subject=${subject}&body=${body}`;
+}
+
+renderCart();
+
+if (window.location.hash === "#cart") {
+  window.addEventListener("load", function () {
+    document.getElementById("cart").scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 }
 </script>
 </body>
