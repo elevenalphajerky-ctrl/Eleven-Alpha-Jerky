@@ -108,7 +108,11 @@ function loadCart() {
 let cart = loadCart();
 
 function saveCart() {
-  localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  try {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  } catch (error) {
+    console.warn("Cart could not be saved in this browser.", error);
+  }
 }
 
 function addItem(name, id) {
@@ -182,8 +186,7 @@ function sendOrder() {
     return;
   }
 
-  const items = cart.map(item => `- ${item.name} x${item.qty}`).join("
-");
+  const items = cart.map(item => `- ${item.name} x${item.qty}`).join("\n");
   const total = cart.reduce((sum, item) => sum + item.qty * PRICE, 0);
   const subject = encodeURIComponent("Eleven Alpha Jerky Order");
   const body = encodeURIComponent(
