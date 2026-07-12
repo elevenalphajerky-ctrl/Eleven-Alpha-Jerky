@@ -17,18 +17,35 @@ export function Reviews() {
     loading.textContent = panel === "reviews" ? "Loading customer reviews…" : "Loading review form…";
     container.appendChild(loading);
 
+    const observer = new MutationObserver(() => {
+      if (container.querySelector("iframe")) {
+        loading.remove();
+        observer.disconnect();
+      }
+    });
+    observer.observe(container, { childList: true, subtree: true });
+
+    const timeout = window.setTimeout(() => {
+      if (!container.querySelector("iframe")) {
+        loading.textContent = "The review service is taking longer than expected. Please close this window and try again.";
+      }
+    }, 10000);
+
     const script = document.createElement("script");
     script.src = panel === "reviews"
       ? "https://widget.trustmary.com/veYxHgPpE"
       : "https://widget.trustmary.com/pdEJpoOF9s";
     script.async = true;
-    script.onload = () => loading.remove();
     script.onerror = () => {
       loading.textContent = "The review service could not load. Please try again.";
     };
     container.appendChild(script);
 
-    return () => container.replaceChildren();
+    return () => {
+      observer.disconnect();
+      window.clearTimeout(timeout);
+      container.replaceChildren();
+    };
   }, [panel]);
 
   return (
