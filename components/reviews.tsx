@@ -1,10 +1,35 @@
 "use client";
 
-import Script from "next/script";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export function Reviews() {
   const [panel, setPanel] = useState<"reviews" | "leave" | null>(null);
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!panel || !widgetRef.current) return;
+
+    const container = widgetRef.current;
+    container.replaceChildren();
+
+    const loading = document.createElement("p");
+    loading.className = "review-loading";
+    loading.textContent = panel === "reviews" ? "Loading customer reviews…" : "Loading review form…";
+    container.appendChild(loading);
+
+    const script = document.createElement("script");
+    script.src = panel === "reviews"
+      ? "https://widget.trustmary.com/veYxHgPpE"
+      : "https://widget.trustmary.com/pdEJpoOF9s";
+    script.async = true;
+    script.onload = () => loading.remove();
+    script.onerror = () => {
+      loading.textContent = "The review service could not load. Please try again.";
+    };
+    container.appendChild(script);
+
+    return () => container.replaceChildren();
+  }, [panel]);
 
   return (
     <>
@@ -30,13 +55,7 @@ export function Reviews() {
               <h3>{panel === "reviews" ? "Customer Reviews" : "Leave a Review"}</h3>
               <button type="button" onClick={() => setPanel(null)} aria-label="Close review window">×</button>
             </div>
-            <div className="review-widget">
-              {panel === "reviews" ? (
-                <Script src="https://widget.trustmary.com/veYxHgPpE" strategy="afterInteractive" />
-              ) : (
-                <Script src="https://widget.trustmary.com/pdEJpoOF9s" strategy="afterInteractive" />
-              )}
-            </div>
+            <div className="review-widget" ref={widgetRef} />
           </div>
         </div>
       )}
