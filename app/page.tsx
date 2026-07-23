@@ -38,7 +38,7 @@ export default function Home() {
             </div>
             <div className="hero-offer">
               <strong>Buy 4, Get 1 Free</strong>
-              <span>Mix and match any five products</span>
+              <span>Plus free shipping on orders of 10+ packs</span>
             </div>
           </div>
         </div>
@@ -165,3 +165,4 @@ export default function Home() {
     </main>
   );
 }
+
