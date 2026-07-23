@@ -21,6 +21,9 @@ export default function OrderPage() {
   } = useCart();
   const [fulfillment, setFulfillment] = useState<"pickup" | "shipping">("pickup");
   const [formMessage, setFormMessage] = useState("");
+  const qualifiesForFreeShipping = itemCount >= 10;
+  const shippingCost = fulfillment === "shipping" && !qualifiesForFreeShipping ? 11.95 : 0;
+  const finalTotal = total + shippingCost;
 
   const submitOrder = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -81,8 +84,13 @@ export default function OrderPage() {
       "",
       `SUBTOTAL: $${subtotal}`,
       `BUY 4, GET 1 FREE DISCOUNT: -$${discount}`,
-      `TOTAL AFTER DISCOUNT: $${total}`,
-      fulfillment === "shipping" ? "Shipping cost: To be confirmed" : "",
+      `TOTAL AFTER DISCOUNT: $${total.toFixed(2)}`,
+      fulfillment === "shipping"
+        ? qualifiesForFreeShipping
+          ? "SHIPPING: FREE (10+ packs)"
+          : "SHIPPING: $11.95"
+        : "SHIPPING: Pickup — $0.00",
+      `FINAL ORDER TOTAL: $${finalTotal.toFixed(2)}`,
       notes ? `\nORDER NOTES\n${notes}` : "",
     ]
       .filter((line) => line !== "")
@@ -103,8 +111,8 @@ export default function OrderPage() {
             <p>Choose your products, review your discount, then select pickup or shipping.</p>
           </div>
           <div className="order-promo">
-            <strong>Buy 4, Get 1 Free</strong>
-            <span>Every fifth product is free. Applied automatically.</span>
+            <strong>Two Ways to Save</strong>
+            <span>Buy 4, get 1 free—plus free shipping on orders of 10 packs or more. Both apply automatically.</span>
           </div>
         </div>
       </section>
@@ -182,8 +190,20 @@ export default function OrderPage() {
             <div className="totals">
               <div><span>Subtotal</span><b>${subtotal}</b></div>
               <div className="discount"><span>Buy 4, Get 1 Free</span><b>−${discount}</b></div>
-              <div className="grand-total"><span>Total</span><b>${total}</b></div>
-              <small>Shipping, if needed, will be confirmed before the order is finalized.</small>
+              {fulfillment === "shipping" && (
+                <div className={qualifiesForFreeShipping ? "discount" : ""}>
+                  <span>Shipping</span>
+                  <b>{qualifiesForFreeShipping ? "FREE" : "$11.95"}</b>
+                </div>
+              )}
+              <div className="grand-total"><span>Total</span><b>${finalTotal.toFixed(2)}</b></div>
+              <small>
+                {fulfillment === "shipping"
+                  ? qualifiesForFreeShipping
+                    ? "Free shipping unlocked with 10 or more packs."
+                    : (10 - itemCount) + " more " + (10 - itemCount === 1 ? "pack" : "packs") + " unlocks free shipping."
+                  : "Pickup has no shipping charge."}
+              </small>
             </div>
 
             <div className="checkout-fields">
