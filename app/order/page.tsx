@@ -22,7 +22,7 @@ export default function OrderPage() {
   const [fulfillment, setFulfillment] = useState<"pickup" | "shipping">("pickup");
   const [formMessage, setFormMessage] = useState("");
   const qualifiesForFreeShipping = itemCount >= 10;
-  const shippingCost = fulfillment === "shipping" && !qualifiesForFreeShipping ? 11.95 : 0;
+  const shippingCost = fulfillment === "shipping" && !qualifiesForFreeShipping ? 8 : 0;
   const finalTotal = total + shippingCost;
 
   const submitOrder = (event: FormEvent<HTMLFormElement>) => {
@@ -88,7 +88,7 @@ export default function OrderPage() {
       fulfillment === "shipping"
         ? qualifiesForFreeShipping
           ? "SHIPPING: FREE (10+ packs)"
-          : "SHIPPING: $11.95"
+          : "SHIPPING: $8.00"
         : "SHIPPING: Pickup — $0.00",
       `FINAL ORDER TOTAL: $${finalTotal.toFixed(2)}`,
       notes ? `\nORDER NOTES\n${notes}` : "",
@@ -193,7 +193,7 @@ export default function OrderPage() {
               {fulfillment === "shipping" && (
                 <div className={qualifiesForFreeShipping ? "discount" : ""}>
                   <span>Shipping</span>
-                  <b>{qualifiesForFreeShipping ? "FREE" : "$11.95"}</b>
+                  <b>{qualifiesForFreeShipping ? "FREE" : "$8.00"}</b>
                 </div>
               )}
               <div className="grand-total"><span>Total</span><b>${finalTotal.toFixed(2)}</b></div>
