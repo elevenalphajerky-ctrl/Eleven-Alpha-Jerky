@@ -66,6 +66,17 @@ export const products: Product[] = [
     price: 10,
   },
   {
+    slug: "no-jerk-left-behind",
+    name: "No Jerk Left Behind",
+    type: "Caribbean Jerk",
+    description:
+      "Warm Caribbean spices, savory island flavor, and a gentle pepper kick.",
+    image: "/images/no-jerk-left-behind.jpg",
+    size: "2 oz pack",
+    heat: 2,
+    price: 10,
+  },
+  {
     slug: "danger-close-sticks",
     name: "Danger Close Sticks",
     type: "Jalapeño Cheddar Meat Sticks",
