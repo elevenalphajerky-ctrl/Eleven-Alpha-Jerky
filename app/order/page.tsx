@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useCart } from "@/components/cart-provider";
 import { products } from "@/lib/products";
 
@@ -18,14 +18,27 @@ export default function OrderPage() {
     addItem,
     changeQuantity,
     removeItem,
+    clearCart,
   } = useCart();
   const [fulfillment, setFulfillment] = useState<"pickup" | "shipping">("pickup");
   const [formMessage, setFormMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const qualifiesForFreeShipping = itemCount >= 10;
   const shippingCost = fulfillment === "shipping" && !qualifiesForFreeShipping ? 8 : 0;
   const finalTotal = total + shippingCost;
 
-  const submitOrder = (event: FormEvent<HTMLFormElement>) => {
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get("payment") === "success") {
+      window.history.replaceState({}, "", "/order");
+      const timer = window.setTimeout(() => {
+        clearCart();
+        setFormMessage("Payment received. Thank you for your order!");
+      }, 0);
+      return () => window.clearTimeout(timer);
+    }
+  }, [clearCart]);
+
+  const submitOrder = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const form = event.currentTarget;
     const data = new FormData(form);
@@ -44,17 +57,14 @@ export default function OrderPage() {
       return;
     }
 
-    let fulfillmentDetails = "";
     if (fulfillment === "pickup") {
       const pickupLocation = String(data.get("pickupLocation") || "");
       if (!pickupLocation) {
         setFormMessage("Choose a pickup area.");
         return;
       }
-      fulfillmentDetails = `Pickup area: ${pickupLocation}`;
     } else {
       const address1 = String(data.get("address1") || "").trim();
-      const address2 = String(data.get("address2") || "").trim();
       const city = String(data.get("city") || "").trim();
       const state = String(data.get("state") || "").trim();
       const zip = String(data.get("zip") || "").trim();
@@ -62,42 +72,39 @@ export default function OrderPage() {
         setFormMessage("Complete the required shipping address fields.");
         return;
       }
-      fulfillmentDetails = `Shipping address:\n${address1}${address2 ? `\n${address2}` : ""}\n${city}, ${state} ${zip}`;
     }
 
-    const items = cart.map((item) => `- ${item.name} x${item.qty}`).join("\n");
     const notes = String(data.get("notes") || "").trim();
-    const body = [
-      "CUSTOMER INFORMATION",
-      "",
-      `Name: ${name}`,
-      `Phone: ${phone}`,
-      `Email: ${email}`,
-      "",
-      "FULFILLMENT",
-      fulfillment === "pickup" ? "Pickup" : "Shipping",
-      fulfillmentDetails,
-      "",
-      "ORDER",
-      "",
-      items,
-      "",
-      `SUBTOTAL: $${subtotal}`,
-      `BUY 4, GET 1 FREE DISCOUNT: -$${discount}`,
-      `TOTAL AFTER DISCOUNT: $${total.toFixed(2)}`,
-      fulfillment === "shipping"
-        ? qualifiesForFreeShipping
-          ? "SHIPPING: FREE (10+ packs)"
-          : "SHIPPING: $8.00"
-        : "SHIPPING: Pickup — $0.00",
-      `FINAL ORDER TOTAL: $${finalTotal.toFixed(2)}`,
-      notes ? `\nORDER NOTES\n${notes}` : "",
-    ]
-      .filter((line) => line !== "")
-      .join("\n");
-
-    setFormMessage("Your email app is opening with the completed order.");
-    window.location.href = `mailto:${orderEmail}?subject=${encodeURIComponent("Eleven Alpha Jerky Order")}&body=${encodeURIComponent(body)}`;
+    setIsSubmitting(true);
+    setFormMessage("Opening secure Square checkout…");
+    try {
+      const response = await fetch("/api/square-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          items: cart.map(({ slug, qty }) => ({ slug, qty })),
+          name,
+          phone,
+          email,
+          fulfillment,
+          pickupLocation: data.get("pickupLocation"),
+          address1: data.get("address1"),
+          address2: data.get("address2"),
+          city: data.get("city"),
+          state: data.get("state"),
+          zip: data.get("zip"),
+          notes,
+        }),
+      });
+      const result = (await response.json()) as { checkoutUrl?: string; error?: string };
+      if (!response.ok || !result.checkoutUrl) {
+        throw new Error(result.error || "Square checkout could not be started.");
+      }
+      window.location.assign(result.checkoutUrl);
+    } catch (error) {
+      setFormMessage(error instanceof Error ? error.message : "Square checkout could not be started.");
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -164,7 +171,7 @@ export default function OrderPage() {
           <form className="checkout-card" onSubmit={submitOrder}>
             <div className="order-section-head compact">
               <span>2</span>
-              <div><h2>Review & send</h2><p>{itemCount} {itemCount === 1 ? "item" : "items"} selected</p></div>
+              <div><h2>Review & pay</h2><p>{itemCount} {itemCount === 1 ? "item" : "items"} selected</p></div>
             </div>
 
             <div className="cart-list">
@@ -243,8 +250,10 @@ export default function OrderPage() {
             </div>
 
             {formMessage && <p className="form-message" role="status">{formMessage}</p>}
-            <button className="send-order" type="submit">Send completed order</button>
-            <p className="email-note">This opens a ready-to-send email to {orderEmail}. You can review it before sending.</p>
+            <button className="send-order" type="submit" disabled={isSubmitting}>
+              {isSubmitting ? "Opening Square…" : `Pay $${finalTotal.toFixed(2)} securely with Square`}
+            </button>
+            <p className="email-note">Your entire cart is included in one secure Square checkout. Questions? Email {orderEmail}.</p>
           </form>
         </aside>
       </div>
