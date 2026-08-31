@@ -36,7 +36,6 @@ export function HeroVideo() {
       muted
       playsInline
       preload="auto"
-      poster="/images/hero-products.jpg"
       aria-label="Eleven Alpha Jerky flavor scenes"
       onEnded={() => setScene(nextScene)}
     >
