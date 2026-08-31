@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { ProductGrid } from "@/components/product-grid";
 import { Reviews } from "@/components/reviews";
+import { HeroVideo } from "@/components/hero-video";
 
 export default function Home() {
   return (
@@ -27,17 +28,7 @@ export default function Home() {
           </div>
           <div className="hero-visual">
             <div className="hero-video-frame">
-              <video
-                autoPlay
-                muted
-                loop
-                playsInline
-                preload="metadata"
-                poster="/images/hero-products.jpg"
-                aria-label="Eleven Alpha Jerky flavor scenes"
-              >
-                <source src="/videos/eleven-alpha-website-banner.mp4" type="video/mp4" />
-              </video>
+              <HeroVideo />
             </div>
             <div className="hero-offer">
               <strong>Buy 4, Get 1 Free</strong>
