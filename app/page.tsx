@@ -26,15 +26,18 @@ export default function Home() {
             </div>
           </div>
           <div className="hero-visual">
-            <div className="hero-image-frame">
-              <Image
-                src="/images/hero-products.jpg"
-                alt="Eleven Alpha Jerky package, hat, and jerky at sunset"
-                fill
-                sizes="(max-width: 820px) 100vw, 54vw"
-                priority
-                unoptimized
-              />
+            <div className="hero-video-frame">
+              <video
+                autoPlay
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                poster="/images/hero-products.jpg"
+                aria-label="Eleven Alpha Jerky flavor scenes"
+              >
+                <source src="/videos/eleven-alpha-website-banner.mp4" type="video/mp4" />
+              </video>
             </div>
             <div className="hero-offer">
               <strong>Buy 4, Get 1 Free</strong>
