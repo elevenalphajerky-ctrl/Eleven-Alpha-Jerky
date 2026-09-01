@@ -155,19 +155,6 @@ img { max-width: 100%; }
 }
 .hero-video-frame::after { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at center, transparent 48%, rgba(0,0,0,.22) 72%, #070707 100%); pointer-events: none; }
 .hero-video-frame video { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(.92) contrast(1.04); }
-.hero-offer {
-  position: absolute;
-  right: -16px;
-  bottom: -24px;
-  min-width: 270px;
-  padding: 18px 22px;
-  background: #0c0b09;
-  border: 1px solid var(--gold);
-  box-shadow: 0 16px 40px rgba(0,0,0,.45);
-}
-.hero-offer strong { display: block; color: var(--gold-light); text-transform: uppercase; letter-spacing: .09em; }
-.hero-offer span { display: block; margin-top: 4px; color: #c9c2b7; font-size: 12px; }
-
 .section { padding: 92px 0; scroll-margin-top: 80px; }
 .section-heading { position: relative; margin-bottom: 42px; }
 .section-heading h2,
@@ -351,7 +338,6 @@ img { max-width: 100%; }
   .hero h1, .hero-lead { margin-inline: auto; }
   .hero-actions, .hero-trust { justify-content: center; }
   .hero-visual { max-width: 680px; width: 100%; margin-inline: auto; }
-  .hero-offer { right: 12px; bottom: -28px; }
   .section { padding: 72px 0; }
   .story-heading { padding-right: 0; }
   .heading-watermark { right: -35px; bottom: 0; opacity: .12; }
@@ -369,7 +355,6 @@ img { max-width: 100%; }
   .hero-lead { font-size: 16px; }
   .hero-trust { gap: 10px 15px; }
   .hero-video-frame { aspect-ratio: 16 / 9; }
-  .hero-offer { position: relative; right: auto; bottom: auto; min-width: 0; margin: -1px 0 0; text-align: center; }
   .section-heading h2, .reviews-section h2, .contact-card h2 { font-size: clamp(42px, 14vw, 58px); }
   .product-grid { grid-template-columns: 1fr; gap: 18px; }
   .product-body { padding: 20px; }
@@ -396,18 +381,6 @@ img { max-width: 100%; }
   .checkout-card { padding: 20px 17px; }
   .field-row { grid-template-columns: 1fr; gap: 0; }
   .address-row { grid-template-columns: 1fr 72px 90px; }
-}
-
-@media (max-width: 1024px) {
-  .hero-offer {
-    position: relative;
-    right: auto;
-    bottom: auto;
-    min-width: 0;
-    width: 100%;
-    margin-top: 12px;
-    text-align: center;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
