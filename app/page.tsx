@@ -30,10 +30,6 @@ export default function Home() {
             <div className="hero-video-frame">
               <HeroVideo />
             </div>
-            <div className="hero-offer">
-              <strong>Buy 4, Get 1 Free</strong>
-              <span>Plus free shipping on orders of 10+ packs</span>
-            </div>
           </div>
         </div>
       </section>
