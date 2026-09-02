@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import { CartProvider, CartToast, MobileCartBar } from "@/components/cart-provider";
 import { SiteHeader } from "@/components/site-header";
@@ -48,6 +49,7 @@ export default function RootLayout({
           <CartToast />
           <MobileCartBar />
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );
