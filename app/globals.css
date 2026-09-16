@@ -237,7 +237,10 @@ img { max-width: 100%; }
 .contact-card > div:first-child { max-width: 690px; }
 .contact-card p:last-child { margin: 14px 0 0; color: var(--muted); line-height: 1.6; }
 .contact-actions { min-width: 250px; display: flex; flex-direction: column; align-items: flex-start; gap: 12px; }
-.contact-actions a:not(.button), .contact-actions span { color: var(--gold-light); font-size: 13px; font-weight: 700; }
+.contact-label { color: #9f978b; font-size: 11px; font-weight: 900; letter-spacing: .14em; text-transform: uppercase; }
+.contact-actions .contact-email { color: var(--gold-light); font-size: 16px; font-weight: 800; overflow-wrap: anywhere; }
+.contact-actions .contact-email:hover { color: #fff; text-decoration: underline; text-underline-offset: 4px; }
+.contact-actions .button { margin-top: 6px; }
 .site-footer { padding: 24px 0; background: #050505; border-top: 1px solid var(--line); }
 .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 30px; color: #8f887e; font-size: 12px; }
 .footer-inner img { height: 64px; width: auto; }
