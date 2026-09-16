@@ -138,14 +138,20 @@ export default function Home() {
       <section className="section contact-section" id="contact">
         <div className="shell contact-card">
           <div>
-            <p className="eyebrow">Ready to Order?</p>
-            <h2>Build Your Pack.</h2>
-            <p>Choose your flavors, select pickup or shipping, and send your order directly to Eleven Alpha Jerky.</p>
+            <p className="eyebrow">Questions, Orders, or Wholesale</p>
+            <h2>Contact Us.</h2>
+            <p>
+              Have a question about flavors, an existing order, local pickup,
+              shipping, or wholesale opportunities? Send us an email and the
+              Eleven Alpha Jerky team will get back to you.
+            </p>
           </div>
           <div className="contact-actions">
+            <span className="contact-label">Company email</span>
+            <a className="contact-email" href="mailto:elevenalphajerky@gmail.com">
+              elevenalphajerky@gmail.com
+            </a>
             <Link className="button button-gold" href="/order">Start your order</Link>
-            <a href="mailto:elevenalphajerky@gmail.com">elevenalphajerky@gmail.com</a>
-            <span>ElevenAlphaJerky.com</span>
           </div>
         </div>
       </section>
@@ -159,4 +165,3 @@ export default function Home() {
     </main>
   );
 }
-
